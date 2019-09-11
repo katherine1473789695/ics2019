@@ -27,6 +27,17 @@ static char* rl_gets() {
   return line_read;
 }
 
+static void cmd_err(int err_type,const char *command){
+	switch(err_type){
+		case 0:
+			printf("Invalid arguments for command '%s'\n",command);
+			break;
+		default:
+			printf("Unknown error\n");
+			break;
+	}
+}
+
 static int cmd_c(char *args) {
   cpu_exec(-1);
   return 0;
@@ -38,6 +49,20 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args){
+	char *sub_args = strtok(NULL, " ");
+	if(sub_args == NULL)
+		cpu_exec(1);
+	else{
+		int n = atoi(sub_args);
+		if(n>0)
+			cpu_exec(n);
+		else
+			cmd_err(0, "si");
+	}
+	return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -46,6 +71,7 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
+  { "si", "Execute single instruction for default and execute n instructions if int n is given", cmd_si},
 
   /* TODO: Add more commands */
 
