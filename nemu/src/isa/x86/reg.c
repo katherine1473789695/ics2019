@@ -42,13 +42,13 @@ void reg_test() {
 
 void isa_reg_display() {
 	printf("eax\t%#x\t%u\n",cpu.eax,cpu.eax);	
-	printf("ecx\t%#x\t%u\n",cpu.eax,cpu.eax);
-	printf("edx\t%#x\t%u\n",cpu.eax,cpu.eax);
-	printf("ebx\t%#x\t%u\n",cpu.eax,cpu.eax);
-	printf("esp\t%#x\t%u\n",cpu.eax,cpu.eax);
-	printf("ebp\t%#x\t%u\n",cpu.eax,cpu.eax);
-	printf("esi\t%#x\t%u\n",cpu.eax,cpu.eax);
-	printf("edi\t%#x\t%u\n",cpu.eax,cpu.eax);
+	printf("ecx\t%#x\t%u\n",cpu.ecx,cpu.ecx);
+	printf("edx\t%#x\t%u\n",cpu.edx,cpu.edx);
+	printf("ebx\t%#x\t%u\n",cpu.ebx,cpu.ebx);
+	printf("esp\t%#x\t%u\n",cpu.esp,cpu.esp);
+	printf("ebp\t%#x\t%u\n",cpu.ebp,cpu.ebp);
+	printf("esi\t%#x\t%u\n",cpu.esi,cpu.esi);
+	printf("edi\t%#x\t%u\n",cpu.edi,cpu.edi);
 	printf("pc\t%#x\t%u\n",cpu.pc,cpu.pc);
 }
 
