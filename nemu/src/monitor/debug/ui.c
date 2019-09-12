@@ -8,6 +8,7 @@
 #include <readline/history.h>
 
 void cpu_exec(uint64_t);
+void isa_reg_display(void);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -31,6 +32,9 @@ static void cmd_err(int err_type,const char *command){
 	switch(err_type){
 		case 0:
 			printf("Invalid arguments for command '%s'\n",command);
+			break;
+		case 1:
+			printf("Lack arguments for command '%s'\n",command);
 			break;
 		default:
 			printf("Unknown error\n");
@@ -63,6 +67,18 @@ static int cmd_si(char *args){
 	return 0;
 }
 
+static int cmd_info(char *args){
+	char *sub_args = strtok(NULL, " ");
+	if(sub_args == NULL)cmd_err(1, "info");
+	else{
+		if(*sub_args == 'r')isa_reg_display();
+		else if(*sub_args == 'w')
+			;
+		else cmd_err(0, "info");
+		}
+	return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -72,7 +88,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "Execute single instruction for default and execute n instructions if int n is given", cmd_si},
-
+  { "info", "Show information about registers with argument 'r' and show information about watchpoint with argument 'w'", cmd_info},
   /* TODO: Add more commands */
 
 };
