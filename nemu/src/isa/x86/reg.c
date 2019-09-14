@@ -41,7 +41,7 @@ void reg_test() {
 }
 
 void isa_reg_display() {
-	printf("eax\t%#x\t\t%-16u\n",cpu.eax,cpu.eax);	
+	printf("eax\t0x%8x\t%u\n",cpu.eax,cpu.eax);	
 	printf("ecx\t%#x\t\t%u\n",cpu.ecx,cpu.ecx);
 	printf("edx\t%#x\t\t%u\n",cpu.edx,cpu.edx);
 	printf("ebx\t%#x\t\t%u\n",cpu.ebx,cpu.ebx);
