@@ -42,14 +42,14 @@ void reg_test() {
 
 void isa_reg_display() {
 	printf("eax\t0x%8x\t%u\n",cpu.eax,cpu.eax);	
-	printf("ecx\t%#x\t\t%u\n",cpu.ecx,cpu.ecx);
-	printf("edx\t%#x\t\t%u\n",cpu.edx,cpu.edx);
-	printf("ebx\t%#x\t\t%u\n",cpu.ebx,cpu.ebx);
-	printf("esp\t%#x\t\t%u\n",cpu.esp,cpu.esp);
-	printf("ebp\t%#x\t\t%u\n",cpu.ebp,cpu.ebp);
-	printf("esi\t%#x\t\t%u\n",cpu.esi,cpu.esi);
-	printf("edi\t%#x\t\t%u\n",cpu.edi,cpu.edi);
-	printf("pc\t%#x\t\t%u\n",cpu.pc,cpu.pc);
+	printf("ecx\t0x%8x\t%u\n",cpu.ecx,cpu.ecx);
+	printf("edx\t0x%8x\t%u\n",cpu.edx,cpu.edx);
+	printf("ebx\t0x%8x\t%u\n",cpu.ebx,cpu.ebx);
+	printf("esp\t0x%8x\t%u\n",cpu.esp,cpu.esp);
+	printf("ebp\t0x%8x\t%u\n",cpu.ebp,cpu.ebp);
+	printf("esi\t0x%8x\t%u\n",cpu.esi,cpu.esi);
+	printf("edi\t0x%8x\t%u\n",cpu.edi,cpu.edi);
+	printf("pc\t0x%8x\t%u\n",cpu.pc,cpu.pc);
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
