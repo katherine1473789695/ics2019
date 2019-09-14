@@ -79,6 +79,31 @@ static int cmd_info(char *args){
 	return 0;
 }
 
+
+static int cmd_x(char *args){
+	char *args1 = strtok(NULL, " ");
+	char *args2 = strtok(NULL, " ");
+	if(args1 == NULL)cmd_err(1, "x");
+	else if(args2 == NULL)cmd_err(1, "x");
+	else{
+		int n = atoi(args1);
+		if(n<1)cmd_err(0, "x");
+		else{
+			int addr;
+	        sscanf(args2,"%x",&addr);
+			for(int i=0;i<n;i++,addr+=4){
+				uint32_t data;
+				data = vaddr_read(addr,4);
+				if((i & 0x3) == 0)printf("0x%-8x: ",addr);
+				printf("0x%-8x\t", data);
+				if((i & 0x3) == 0x3)printf("\n");
+			}
+			printf("\n");
+		}
+	}
+	return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -89,6 +114,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "Execute single instruction for default and execute n instructions if int n is given", cmd_si},
   { "info", "Show information about registers with argument 'r' and show information about watchpoint with argument 'w'", cmd_info},
+  { "x", "Print N 4-Bytes from the start address calculated from EXPR", cmd_x},
   /* TODO: Add more commands */
 
 };
