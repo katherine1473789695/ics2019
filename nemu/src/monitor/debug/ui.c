@@ -94,8 +94,8 @@ static int cmd_x(char *args){
 			for(int i=0;i<n;i++,addr+=4){
 				uint32_t data;
 				data = vaddr_read(addr,4);
-				if((i & 0x3) == 0)printf("0x%-8x: ",addr);
-				printf("0x%-8x\t", data);
+				if((i & 0x3) == 0)printf("0x%08x: ",addr);
+				printf("0x%08x\t", data);
 				if((i & 0x3) == 0x3)printf("\n");
 			}
 			printf("\n");
