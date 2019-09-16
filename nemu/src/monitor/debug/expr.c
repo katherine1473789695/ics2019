@@ -7,10 +7,13 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ
+  TK_NOTYPE = 256, 
 
   /* TODO: Add more token types */
 
+  TK_PLUS, TK_MINUS, TK_MULTIPLY, TK_DIVIDE,
+  TK_LPAR, TK_RPAR,
+  TK_DNUM, TK_EQ
 };
 
 static struct rule {
@@ -23,7 +26,13 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
+  {"\\+", TK_PLUS},     // plus
+  {"\\-", TK_MINUS},     // minus
+  {"\\*", TK_MULTIPLY}, // multiply
+  {"\\/", TK_DIVIDE},    // divide
+  {"\\(", TK_LPAR},     // left bracket
+  {"\\)", TK_RPAR},     // right bracket
+  {"[0-9]+", TK_DNUM},  // decimalism number
   {"==", TK_EQ}         // equal
 };
 
@@ -78,9 +87,38 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
+		
+		if(substr_len>32)assert(0);
         switch (rules[i].token_type) {
-          default: TODO();
+			case TK_PLUS:
+				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				break;
+			case TK_MINUS:
+				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				break;
+			case TK_MULTIPLY:
+				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				break;
+			case TK_DIVIDE:
+				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				break;
+			case TK_LPAR:
+				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				break;
+			case TK_RPAR:
+				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				break;
+			case TK_EQ:
+				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				break;
+			case TK_DNUM:
+				for(int j=0;j<substr_len;j++){
+					tokens[nr_token].str[j]= *(e+position+j-substr_len);
+				}
+				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				break;
+
+            default: TODO();
         }
 
         break;
