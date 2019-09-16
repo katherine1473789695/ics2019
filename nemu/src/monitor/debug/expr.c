@@ -114,6 +114,7 @@ static bool make_token(char *e) {
 			case TK_DNUM:
 				for(int j=0;j<substr_len;j++){
 					tokens[nr_token].str[j]= *(e+position+j-substr_len);
+					printf("%d %c\n",j,tokens[nr_token].str[j]);
 				}
 				tokens[nr_token].type=rules[i].token_type;nr_token++;
 				break;
