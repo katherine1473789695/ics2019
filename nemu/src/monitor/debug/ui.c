@@ -104,6 +104,14 @@ static int cmd_x(char *args){
 	return 0;
 }
 static int cmd_p(char *args){
+	char *args1 = strtok(NULL, " ");
+	if(args1== NULL)cmd_err(1,"p");
+	else{
+		bool success;
+		uint32_t result= expr(args1,&success);
+		if(success)printf("0x%x(%d)\n",result,result);
+		else printf("Invalid expr!\n");
+	}
 	return 0;
 }
 
