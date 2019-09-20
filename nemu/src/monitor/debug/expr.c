@@ -212,6 +212,7 @@ int eval(int p,int q){
 }
 
 uint32_t expr(char *e, bool *success) {
+	assert(make_token(e)==true);
   if (!make_token(e)) {
     *success = false;
     return 0;
