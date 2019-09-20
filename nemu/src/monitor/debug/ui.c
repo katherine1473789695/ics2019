@@ -103,6 +103,9 @@ static int cmd_x(char *args){
 	}
 	return 0;
 }
+static int cmd_p(char *args){
+	return 0;
+}
 
 static struct {
   char *name;
@@ -115,6 +118,7 @@ static struct {
   { "si", "Execute single instruction for default and execute n instructions if int n is given", cmd_si},
   { "info", "Show information about registers with argument 'r' and show information about watchpoint with argument 'w'", cmd_info},
   { "x", "Print N 4-Bytes from the start address calculated from EXPR", cmd_x},
+  { "p", "Print the value of the expression", cmd_p},
   /* TODO: Add more commands */
 
 };

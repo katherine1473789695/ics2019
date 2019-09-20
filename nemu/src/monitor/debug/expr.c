@@ -5,15 +5,16 @@
  */
 #include <sys/types.h>
 #include <regex.h>
+#include <string.h>
 
 enum {
-  TK_NOTYPE = 256, 
+	TK_NOTYPE = 256, 
 
-  /* TODO: Add more token types */
+	/* TODO: Add more token types */
 
-  TK_PLUS, TK_MINUS, TK_MULTIPLY, TK_DIVIDE,
-  TK_LPAR, TK_RPAR,
-  TK_DNUM, TK_EQ
+	TK_PLUS='+', TK_MINUS='-', TK_MULTIPLY='*', TK_DIVIDE='/',
+	TK_LPAR='(', TK_RPAR=')',
+	TK_DNUM='d', TK_EQ='e'
 };
 
 static struct rule {
@@ -133,6 +134,79 @@ static bool make_token(char *e) {
   }
 
   return true;
+}
+
+bool check_parentheses(int p,int q){
+	if(!((tokens[p].type == '(')&&(tokens[q].type == ')')))return false;
+	int k=0;
+	for(int i=p+1;i<q;i++){
+		if(tokens[i].type == '(')k++;
+		if(tokens[i].type == ')')k--;
+		if(k<0)return false;
+	}
+	if(k == 0)return true;
+	else return false;
+}
+
+int eval(int p,int q){
+	if(p>q)assert(0);
+	else if(p == q){
+		int length = strlen(tokens[p].str);
+		int sum = 0;
+		if(tokens[p].type == 'd'){
+			for(int i=0;i<length;i++){
+				sum=sum*10+tokens[p].str[i]-48;
+			}
+		}
+		return sum;
+	}
+	else if(check_parentheses(p,q) == true){
+		return eval(p+1,q-1);
+	}
+	else{
+		int op=-1;int i=q;int num=0;
+		for(;i>=p;i--){
+			if(tokens[i].type=='+'||tokens[i].type=='-'){
+				op=i;
+				break;
+			}else if(tokens[i].type==')'){
+				num=1;i--;
+				for(;i>=p;i--){
+					if(tokens[i].type == ')')num++;
+					if(tokens[i].type == '(')num--;
+					if(num<0)assert(0);
+					if(num==0)break;
+				}
+			}
+		}
+		if(op==-1){
+			for(i=q;i>=p;i--){
+				if(tokens[i].type == '*'||tokens[i].type == '/'){
+					op=i;
+					break;
+				}else if(tokens[i].type == ')'){
+					num=1;i--;
+					for(;i>=p;i--){
+						if(tokens[i].type == ')')num++;
+						if(tokens[i].type == '(')num--;
+						if(num<0)assert(0);
+						if(num==0)break;
+						}
+				}
+			}
+		}
+		
+		int val1 = eval(p,op-1);
+		int val2 = eval(op+1,q);
+
+		switch(tokens[op].type){
+			case '+':return val1+val2;
+			case '-':return val1-val2;
+			case '*':return val1*val2;
+			case '/':return val1/val2;
+			default:assert(0);
+		}
+	}
 }
 
 uint32_t expr(char *e, bool *success) {
