@@ -107,7 +107,7 @@ static int cmd_p(char *args){
 	char *args1 = strtok(NULL, " ");
 	if(args1== NULL)cmd_err(1,"p");
 	else{
-		bool success;
+		bool success=true;
 		uint32_t result= expr(args1,&success);
 		printf("%d\n",success);
 		if(success)printf("0x%x(%d)\n",result,result);
