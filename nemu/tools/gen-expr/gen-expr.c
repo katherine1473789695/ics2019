@@ -15,17 +15,18 @@ static inline void gen_rand_expr(int l,int r) {
   //buf[0] = '\0';
   if(l==r)buf[l]=choose(10)+48;
   else if(r==l+1){
-	  switch(choose(2)){
+	  /*switch(choose(2)){
 		  case 0:
 	          buf[l]=choose(9)+1+48;break;
 		  default:
 			  buf[l]=' ';break;
-	  }
+	  }*/
+	  buf[l]=choose(9)+1+48;
 	  buf[r]=choose(10)+48;
   }
   else{
 	  int op=l+1+choose(r-l-1);
-	  switch(choose(7)){
+	  switch(choose(5)){
 		  case 0:
 			  gen_rand_expr(l,op-1);
 			  buf[op]='+';
@@ -46,14 +47,14 @@ static inline void gen_rand_expr(int l,int r) {
 			  buf[op]='/';
 			  gen_rand_expr(op+1,r);
 			  break;
-		  case 4:
+		  /*case 4:
 		      buf[l]=' ';
 		      gen_rand_expr(l+1,r);
 		      break;
 		  case 5:
 		      buf[r]=' ';
 		      gen_rand_expr(l,r-1);
-		      break;	  
+		      break;*/	  
 		  default:
 			  buf[l]='(';
 			  buf[r]=')';
