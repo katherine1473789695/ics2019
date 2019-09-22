@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
 /*  int is_batch_mode = init_monitor(argc, argv);*/
 
-  FILE *fp = fopen("/home/katherine/ics2019/nemu/tools/gen-expr/input","r");
+  /*FILE *fp = fopen("/home/katherine/ics2019/nemu/tools/gen-expr/input","r");
   char str[100];
   int result;
   for(int i=0;i<100;i++){
@@ -19,10 +19,10 @@ int main(int argc, char *argv[]) {
 	  printf("%u\n",expr(str,&success));
 	  }
 	  fclose(fp);
-
-   /* FILE * infile;
+*/
+    FILE * infile;
 	char input[50];
-	infile = fopen("~/ics2019/nemu/tools/gen-expr/input","r");
+	infile = fopen("/home/katherine/ics2019/nemu/tools/gen-expr/input","r");
 	while(fgets( input,50,infile)!=NULL){
 		char *result=strtok(input," ");
 		char *expression = strtok(NULL, " ");
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 		uint32_t count_result = expr(expression,&success);
 		if(!success)printf("calculation failed!\n");
 		else printf("%s\t%u\n",result,count_result);
-	}*/
+	}
 	/* Receive commands from user. */
   /*ui_mainloop(is_batch_mode);*/
 
