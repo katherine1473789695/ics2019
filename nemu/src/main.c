@@ -15,9 +15,9 @@ int main(int argc, char *argv[]) {
   /* Receive commands from user. */
   //ui_mainloop(is_batch_mode);
     FILE * infile;
-	char input[100];
+	char input[50];
 	infile = fopen("~/ics2019/nemu/tools/gen-expr/input","r");
-	while(fgets(input,100,infile)!=NULL){
+	while(fgets( input,50,infile)!=NULL){
 		char *result=strtok(input," ");
 		char *expression = strtok(NULL, " ");
 		bool success=true;
