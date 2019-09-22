@@ -30,8 +30,8 @@ int main(int argc, char *argv[]) {
 		char *expression = strtok(NULL, " ");
 		expression[strlen(expression)-1]='\0';
 		printf("%s\n",expression);
-		bool success;
-		uint32_t count_result = expr(expression,&success);
+		bool success=true;
+		uint32_t count_result = 0/*expr(expression,&success)*/;
 		if(!success)printf("calculation failed!\n");
 		else printf("%s\t%u\n",result,count_result);
 	}
