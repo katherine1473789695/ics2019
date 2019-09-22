@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 	infile = fopen("/home/katherine/ics2019/nemu/tools/gen-expr/input","r");
 	while(fgets( input,50,infile)!=NULL){
 		char *result=strtok(input," ");
-		char *expression = strtok(NULL, " ");
+		char *expression = strtok(NULL, "\n");
 		expression[strlen(expression)-1]='\0';
 		printf("%s\n",expression);
 		bool success=true;
