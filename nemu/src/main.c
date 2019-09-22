@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<string.h>
 #include "nemu.h"
 
 int init_monitor(int, char *[]);
@@ -26,6 +27,7 @@ int main(int argc, char *argv[]) {
 	while(fgets( input,50,infile)!=NULL){
 		char *result=strtok(input," ");
 		char *expression = strtok(NULL, " ");
+		expression[strlen(expression)-1]='\0';
 		bool success=true;
 		uint32_t count_result = expr(expression,&success);
 		if(!success)printf("calculation failed!\n");
