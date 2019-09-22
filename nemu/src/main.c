@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
   int result;
   while(!feof(fp)){
 	  fscanf(fp,"%u",&result);
-	  fscanf(fp,"%s",str);
+	  fscanf(fp,"%s\n",str);
 	  bool success = true;
 	  printf("%u\n",expr(str,&success));
 	  }
