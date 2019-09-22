@@ -17,6 +17,7 @@ int main(int argc, char *argv[]) {
 	  fscanf(fp,"%u",&result);
 	  fscanf(fp,"%s",str);
 	  bool success ;
+	  printf("%s\n",str);
 	  uint32_t count_result =  expr(str,&success);
 	  printf("%u %s %u\n",result,str,count_result);
 	  }
