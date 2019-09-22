@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
   int result;
   while(!feof(fp)){
 	  fscanf(fp,"%u",&result);
-	  fscanf(fp,"%s\n",str);
+	  fscanf(fp,"%s",str);
 	  //bool success = true;
 	  uint32_t count_result = 0;// expr(expression,&success);
 	  printf("%u %s %u\n",result,str,count_result);
