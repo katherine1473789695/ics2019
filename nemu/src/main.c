@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 		char *expression = strtok(NULL, " ");
 		expression[strlen(expression)-1]='\0';
 		printf("%s\n",expression);
-		bool success=true;
+		bool success;
 		uint32_t count_result = expr(expression,&success);
 		if(!success)printf("calculation failed!\n");
 		else printf("%s\t%u\n",result,count_result);
