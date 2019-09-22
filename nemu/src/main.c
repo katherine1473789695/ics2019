@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
   FILE *fp = fopen("/home/katherine/ics2019/nemu/tools/gen-expr/input","r");
   char str[100];
-  int result;
+  uint32_t result;
   while(!feof(fp)){
 	  fscanf(fp,"%u",&result);
 	  fscanf(fp,"%s",str);
