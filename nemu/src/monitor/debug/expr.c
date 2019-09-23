@@ -110,6 +110,7 @@ static bool make_token(char *e) {
 					tokens[nr_token].str[j]= *(e+position+j-substr_len);
 					//printf("%d %c\n",j,tokens[nr_token].str[j]);
 				}
+				tokens[nr_token].str[substr_len]='\0';
 				tokens[nr_token].type = rules[i].token_type;
 				tokens[nr_token].priority = rules[i].priority;
 				nr_token++;
