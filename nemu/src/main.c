@@ -20,7 +20,8 @@ int main(int argc, char *argv[]) {
 	  printf("%s\n",str);
 	  uint32_t count_result = expr("2+3*4",&success);
 	  //uint32_t count_result =  expr(str,&success);
-	  printf("%u %s %u\n",result,str,count_result);
+	  //printf("%u %s %u\n",result,str,count_result);
+	  assert(count_result == result);
 	  }
 	  fclose(fp);
 
