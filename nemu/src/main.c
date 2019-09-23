@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
 	  fscanf(fp,"%s",str);
 	  bool success ;
 	  printf("%s\n",str);
-	  uint32_t count_result = expr("2+3*4",&success);
-	  //uint32_t count_result =  expr(str,&success);
+	  //uint32_t count_result = expr("2+3*4",&success);
+	  uint32_t count_result =  expr(str,&success);
 	  printf("%u %s %u\n",result,str,count_result);
 	  //assert(count_result == result);
 	  if(count_result == result)printf("yes\n");
