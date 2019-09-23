@@ -115,7 +115,7 @@ static bool make_token(char *e) {
 			case TK_DNUM:
 				for(int j=0;j<substr_len;j++){
 					tokens[nr_token].str[j]= *(e+position+j-substr_len);
-					printf("%d %c\n",j,tokens[nr_token].str[j]);
+					//printf("%d %c\n",j,tokens[nr_token].str[j]);
 				}
 				tokens[nr_token].type=rules[i].token_type;nr_token++;
 				break;
@@ -133,7 +133,7 @@ static bool make_token(char *e) {
     }
   }
 
-  printf("nr_token = %d\n",nr_token);
+//  printf("nr_token = %d\n",nr_token);
   return true;
 }
 
@@ -150,7 +150,7 @@ bool check_parentheses(int p,int q){
 }
 
 int eval(int p,int q){
-	printf("%d,%d\n",p,q);
+//	printf("%d,%d\n",p,q);
 	if(p>q)assert(0);
 	else if(p == q){
 		int length = strlen(tokens[p].str);
