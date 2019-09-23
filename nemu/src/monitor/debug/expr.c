@@ -151,7 +151,7 @@ static int get_op(int l,int r){
 	for(int i=l;i<=r;i++){
 		if(tokens[i].type == '(')par++;
 		else if(tokens[i].type == ')')par--;
-		assert(par<0);
+		//assert(par<0);
 		if(par>0)continue;
 		if((tokens[i].priority <= priority)&&(tokens[i].priority!=0)){
 			priority = tokens[i].priority;
