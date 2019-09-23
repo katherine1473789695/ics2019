@@ -20,21 +20,22 @@ enum {
 static struct rule {
   char *regex;
   int token_type;
+  int priority;
 } rules[] = {
 
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"\\+", TK_PLUS},     // plus
-  {"\\-", TK_MINUS},     // minus
-  {"\\*", TK_MULTIPLY}, // multiply
-  {"\\/", TK_DIVIDE},    // divide
-  {"\\(", TK_LPAR},     // left bracket
-  {"\\)", TK_RPAR},     // right bracket
-  {"[0-9]+", TK_DNUM},  // decimalism number
-  {"==", TK_EQ}         // equal
+  {" +", TK_NOTYPE,0},    // spaces
+  {"\\+", TK_PLUS,2},     // plus
+  {"\\-", TK_MINUS,2},     // minus
+  {"\\*", TK_MULTIPLY,3}, // multiply
+  {"\\/", TK_DIVIDE,3},    // divide
+  {"\\(", TK_LPAR,4},     // left bracket
+  {"\\)", TK_RPAR,4},     // right bracket
+  {"[0-9]+", TK_DNUM,0},  // decimalism number
+  {"==", TK_EQ,1}         // equal
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -61,6 +62,7 @@ void init_regex() {
 typedef struct token {
   int type;
   char str[32];
+  int priority;
 } Token;
 
 static Token tokens[65536] __attribute__((used)) = {};
@@ -91,33 +93,26 @@ static bool make_token(char *e) {
 		
 		if(substr_len>32)assert(0);
         switch (rules[i].token_type) {
+			case TK_NOTYPE:break;
 			case TK_PLUS:
-				tokens[nr_token].type=rules[i].token_type;nr_token++;
-				break;
 			case TK_MINUS:
-				tokens[nr_token].type=rules[i].token_type;nr_token++;
-				break;
 			case TK_MULTIPLY:
-				tokens[nr_token].type=rules[i].token_type;nr_token++;
-				break;
 			case TK_DIVIDE:
-				tokens[nr_token].type=rules[i].token_type;nr_token++;
-				break;
 			case TK_LPAR:
-				tokens[nr_token].type=rules[i].token_type;nr_token++;
-				break;
 			case TK_RPAR:
-				tokens[nr_token].type=rules[i].token_type;nr_token++;
-				break;
 			case TK_EQ:
-				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				tokens[nr_token].type = rules[i].token_type;
+				tokens[nr_token].priority = rules[i].priority;
+				nr_token++;
 				break;
 			case TK_DNUM:
 				for(int j=0;j<substr_len;j++){
 					tokens[nr_token].str[j]= *(e+position+j-substr_len);
 					//printf("%d %c\n",j,tokens[nr_token].str[j]);
 				}
-				tokens[nr_token].type=rules[i].token_type;nr_token++;
+				tokens[nr_token].type = rules[i].token_type;
+				tokens[nr_token].priority = rules[i].priority;
+				nr_token++;
 				break;
 
             default: TODO();
@@ -149,9 +144,30 @@ bool check_parentheses(int p,int q){
 	else return false;
 }
 
-int eval(int p,int q){
+static int get_op(int l,int r){
+	int op = l;
+	int priority = 4;
+	int par=0;
+	for(int i=l;i<=r;i++){
+		if(tokens[i].type == '(')par++;
+		else if(tokens[i].type == ')')par--;
+		assert(par<0);
+		if(par>0)continue;
+		if((tokens[i].priority <= priority)&&(tokens[i].priority!=0)){
+			priority = tokens[i].priority;
+			op = i;
+		}
+	}
+	return op;
+}
+
+static uint32_t eval(int p,int q,bool *success){
 //	printf("%d,%d\n",p,q);
-	if(p>q)assert(0);
+	if(p>q){
+		*success = false;
+		printf("wrong!\n");
+		return -1;
+	}
 	else if(p == q){
 		int length = strlen(tokens[p].str);
 		int sum = 0;
@@ -163,10 +179,10 @@ int eval(int p,int q){
 		return sum;
 	}
 	else if(check_parentheses(p,q) == true){
-		return eval(p+1,q-1);
+		return eval(p+1,q-1,success);
 	}
 	else{
-		int op=-1;int i=q;int num=0;
+		/*int op=-1;int i=q;int num=0;
 		for(;i>=p;i--){
 			if(tokens[i].type=='+'||tokens[i].type=='-'){
 				op=i;
@@ -196,17 +212,23 @@ int eval(int p,int q){
 						}
 				}
 			}
-		}
+		}*/
+		int op = get_op(p,q);
 		
-		int val1 = eval(p,op-1);
-		int val2 = eval(op+1,q);
+		int val1 = eval(p,op-1,success);
+		int val2 = eval(op+1,q,success);
 
 		switch(tokens[op].type){
 			case '+':return val1+val2;
 			case '-':return val1-val2;
 			case '*':return val1*val2;
-			case '/':return val1/val2;
-			default:assert(0);
+			case '/'://return val1/val2;
+				if(val2 == 0){
+					*success = false;
+					printf("Zero division error!\n");
+					return -1;
+				}else return val1/val2;
+			default:return -1;
 		}
 	}
 }
@@ -218,7 +240,8 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  uint32_t result = eval(0, nr_token-1);
+  *success = true;
+  uint32_t result = eval(0, nr_token-1,success);
   return result;
   /* TODO: Insert codes to evaluate the expression. */
   TODO();

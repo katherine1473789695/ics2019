@@ -109,7 +109,7 @@ static int cmd_p(char *args){
 	else{
 		bool success=true;
 		uint32_t result= expr(args1,&success);
-		printf("%d\n",success);
+		//printf("%d\n",success);
 		if(success)printf("0x%x(%d)\n",result,result);
 		else printf("Invalid expr!\n");
 	}
