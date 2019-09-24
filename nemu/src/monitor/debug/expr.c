@@ -37,7 +37,7 @@ static struct rule {
   {"\\/", TK_DIVIDE,4},    // divide
   {"\\(", TK_LPAR,6},     // left bracket
   {"\\)", TK_RPAR,6},  // right bracket
-  {"\\$[a-zA-Z]{3}", TK_REG,0}, //register
+  {"\\$[a-zA-Z]{2,3}", TK_REG,0}, //register
   {"0[xX][0-9a-fA-F]+", TK_HEX,0}, //hex number
   {"[0-9]+", TK_DNUM,0},  // decimalism number
   {"==", TK_EQ,2},         // equal
