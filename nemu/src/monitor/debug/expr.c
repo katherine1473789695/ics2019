@@ -130,6 +130,7 @@ static bool make_token(char *e) {
 				tokens[nr_token].priority = rules[i].priority;
 				for(int j=0;j<substr_len-1;j++){
 					tokens[nr_token].str[j]=*(e+position+1+j-substr_len);
+					if(tokens[nr_token].str[j]<=90)tokens[nr_token].str[j]+=32;
 				}
 				tokens[nr_token].str[substr_len-1]='\0';
 				nr_token++;
