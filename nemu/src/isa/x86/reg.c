@@ -53,5 +53,23 @@ void isa_reg_display() {
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
-  return 0;
+	int name_len = strlen(s);
+	int width = 4;
+	if(name_len == 3)width=4;
+	else if(name_len ==2){
+		if(s[1]=='h'||s[1]=='H'||s[1]=='l'||s[1]=='L')width=1;
+		else width=2;
+	}
+	for(int i=R_EAX;i<=R_EDI;i++){
+		if(strcmp(s,reg_name(i,width))==0){
+			switch(width){
+				case 4:return reg_l(i);
+				case 2:return reg_w(i);
+				case 1:return reg_b(i);
+			}
+		}
+	}
+
+	
+    return 0;
 }

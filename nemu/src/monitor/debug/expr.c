@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #include <string.h>
+uint32_t isa_reg_str2val(const char *s,bool *success);
 
 enum {
 	TK_NOTYPE = 256, 
@@ -14,7 +15,9 @@ enum {
 
 	TK_PLUS='+', TK_MINUS='-', TK_MULTIPLY='*', TK_DIVIDE='/',
 	TK_LPAR='(', TK_RPAR=')',
-	TK_DNUM='d', TK_EQ='e'
+	TK_REG='r', TK_HEX='h', TK_DNUM='d', 
+	TK_EQ='e', TK_NEQ='n', TK_AND='a',
+	TK_POINTER, TK_NEGTIVE
 };
 
 static struct rule {
@@ -28,14 +31,18 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE,0},    // spaces
-  {"\\+", TK_PLUS,2},     // plus
-  {"\\-", TK_MINUS,2},     // minus
-  {"\\*", TK_MULTIPLY,3}, // multiply
-  {"\\/", TK_DIVIDE,3},    // divide
-  {"\\(", TK_LPAR,4},     // left bracket
-  {"\\)", TK_RPAR,4},     // right bracket
+  {"\\+", TK_PLUS,3},     // plus
+  {"\\-", TK_MINUS,3},     // minus
+  {"\\*", TK_MULTIPLY,4}, // multiply
+  {"\\/", TK_DIVIDE,4},    // divide
+  {"\\(", TK_LPAR,6},     // left bracket
+  {"\\)", TK_RPAR,6},  // right bracket
+  {"\\$[a-zA-Z]{3}", TK_REG,0}, //register
+  {"0[xX][0-9a-fA-F]+", TK_HEX,0}, //hex number
   {"[0-9]+", TK_DNUM,0},  // decimalism number
-  {"==", TK_EQ,1}         // equal
+  {"==", TK_EQ,2},         // equal
+  {"!=", TK_NEQ,2},         //not equal
+  {"&&", TK_AND,1}          //and
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -101,11 +108,14 @@ static bool make_token(char *e) {
 			case TK_LPAR:
 			case TK_RPAR:
 			case TK_EQ:
+			case TK_NEQ:
+			case TK_AND:
 				tokens[nr_token].type = rules[i].token_type;
 				tokens[nr_token].priority = rules[i].priority;
 				nr_token++;
 				break;
 			case TK_DNUM:
+			case TK_HEX:
 				for(int j=0;j<substr_len;j++){
 					tokens[nr_token].str[j]= *(e+position+j-substr_len);
 					//printf("%d %c\n",j,tokens[nr_token].str[j]);
@@ -115,7 +125,15 @@ static bool make_token(char *e) {
 				tokens[nr_token].priority = rules[i].priority;
 				nr_token++;
 				break;
-
+			case TK_REG:
+				tokens[nr_token].type = rules[i].token_type;
+				tokens[nr_token].priority = rules[i].priority;
+				for(int j=0;j<substr_len-1;j++){
+					tokens[nr_token].str[j]=*(e+position+1+j-substr_len);
+				}
+				tokens[nr_token].str[substr_len-1]='\0';
+				nr_token++;
+				break;
             default: TODO();
         }
 
@@ -147,7 +165,7 @@ bool check_parentheses(int p,int q){
 
 static int get_op(int l,int r){
 	int op = l;
-	int priority = 4;
+	int priority = 6;
 	int par=0;
 	for(int i=l;i<=r;i++){
 		if(tokens[i].type == '(')par++;
@@ -176,6 +194,12 @@ static uint32_t eval(int p,int q,bool *success){
 			for(int i=0;i<length;i++){
 				sum=sum*10+tokens[p].str[i]-48;
 			}
+		}
+		else if(tokens[p].type == 'h'){
+			sscanf(tokens[p].str,"%x",&sum);
+		}
+		else if(tokens[p].type == 'r'){
+			sum=isa_reg_str2val(tokens[p].str,success);
 		}
 		return sum;
 	}
@@ -215,6 +239,13 @@ static uint32_t eval(int p,int q,bool *success){
 			}
 		}*/
 		int op = get_op(p,q);
+		if(tokens[op].type == TK_POINTER){
+			uint32_t addr = eval(op+1,q,success);
+			return vaddr_read(addr,4);
+		}
+		else if(tokens[op].type == TK_NEGTIVE){
+			return -eval(op+1,q,success);
+		}
 		
 		int val1 = eval(p,op-1,success);
 		int val2 = eval(op+1,q,success);
@@ -229,6 +260,9 @@ static uint32_t eval(int p,int q,bool *success){
 					printf("Zero division error!\n");
 					return -1;
 				}else return val1/val2;
+			case 'e':return val1 == val2;
+			case 'n':return val1 != val2;
+			case 'a':return val1 && val2;
 			default:return -1;
 		}
 	}
@@ -241,6 +275,19 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
+
+  for(int i=0;i<nr_token;i++){
+	  int t = tokens[i-1].type;
+	  if((tokens[i].type == '*')&&(i==0||(t!='d' && t!='h' && t!='r' && t!=')'))){
+		  tokens[i].type = TK_POINTER;
+		  tokens[i].priority = 5;
+	  }
+	  else if((tokens[i].type == '-')&&(i==0||(t!='d' && t!='h' && t!='r' && t!=')'))){
+		tokens[i].type = TK_NEGTIVE;
+		tokens[i].priority = 5;
+	  }	
+  }
+
   *success = true;
   uint32_t result = eval(0, nr_token-1,success);
   return result;
