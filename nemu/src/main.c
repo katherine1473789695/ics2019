@@ -9,7 +9,7 @@ uint32_t expr(char *e,bool *success);
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
   int is_batch_mode = init_monitor(argc, argv);
-
+/*
   FILE *fp = fopen("/home/katherine/ics2019/nemu/tools/gen-expr/input","r");
   char str[100];
   uint32_t result;
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 	  else printf("no\n");
 	  }
 	  fclose(fp);
-
+*/
 /*  
     FILE * infile;
 	char input[50];
