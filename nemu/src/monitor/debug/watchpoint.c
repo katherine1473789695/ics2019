@@ -20,4 +20,60 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
+WP* new_wp(char *s){
+	if(s == NULL){
+		printf("Lacking expression!\n");
+		return NULL;
+	}
+	if(head == NULL){
+		head=free_;
+		free_ = free_->next;
+		return head;
+	}
+	else{
+		if(free_ == NULL){
+			printf("NO Free watchpointer!\n");
+			return NULL;
+		}
+		else{
+			WP *p = free_;
+			free_ = free_->next;
+			p->next = head;
+			head = p;
+			strcpy(head->expression,s);
+			bool success;
+			uint32_t result = expr(s,&success);
+			if(!success){
+				printf("Invalid Expression!\n");
+				return NULL;
+			}
+			head->value = result;
+			head->hit_time = 0;
+			return head;
+		}
+	}
+}
+
+void free_wp(WP *wp){
+	if(wp == NULL){
+		printf("Cannot free NULL pointer!\n");
+		return;
+	}
+	else if(wp == head){
+		head = wp->next;
+		wp->next = free_;
+		free_ = wp;
+		return;
+	}
+	else{
+		for(WP *p=head;p!=NULL;p=p->next){
+			if(p->next == wp){
+				p->next = wp->next;
+				wp->next = free_;
+				free_ = wp;
+				return;
+			}
+		}
+	}
+}
 
