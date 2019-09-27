@@ -18,7 +18,7 @@ void init_wp_pool() {
   free_ = wp_pool;
 }
 
-/* TODO: Implement the functionality of watchpoint */
+/*  TODO: Implement the functionality of watchpoint */
 
 WP* new_wp(char *s){
 	if(s == NULL){
@@ -29,6 +29,15 @@ WP* new_wp(char *s){
 		head=free_;
 		free_ = free_->next;
 		head->next = NULL;
+		strcpy(head->expression,s);
+		bool success;
+		uint32_t result = expr(s,&success);
+		if(!success){
+			printf("Invalid Expression!\n");
+			return NULL;
+		}
+		head->value = result;
+		head->hit_time = 0;
 		return head;
 	}
 	else{
