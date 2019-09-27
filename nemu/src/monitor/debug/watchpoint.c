@@ -99,6 +99,7 @@ void wp_display(){
 	printf("NUM\tVALUE\tWHAT\n");
 	for(WP *p=head;p!=NULL;p=p->next){
 		printf("%d\t%u\t%s\n",p->NO,p->value,p->expression);
+		printf("\tBreakpoint already hit %d time(s)\n",p->hit_time); 
 	}
 	return;
 }
