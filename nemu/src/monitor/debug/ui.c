@@ -133,7 +133,7 @@ static int cmd_w(char *args){
 	if(expression == NULL)cmd_err(1,"w");
 	else{
 		WP *p = new_wp(expression);
-		printf("Hardware watchpoint %d: %s",p->NO,p->expression);
+		printf("Hardware watchpoint %d: %s\n",p->NO,p->expression);
 	}
 	return 0;
 }
