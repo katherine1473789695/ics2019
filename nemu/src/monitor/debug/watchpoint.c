@@ -77,3 +77,16 @@ void free_wp(WP *wp){
 	}
 }
 
+void wp_display(){
+	if(head==NULL){
+		printf("No watchpoints!\n");
+		return;
+	}
+	printf("NUM\tVALUE\tWHAT\n");
+	for(WP *p=head;p!=NULL;p=p->next){
+		printf("%d\t%u\t%s\n",p->NO,p->value,p->expression);
+	}
+	return;
+}
+
+

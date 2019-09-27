@@ -9,6 +9,7 @@
 
 void cpu_exec(uint64_t);
 void isa_reg_display(void);
+void wp_display();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -72,8 +73,7 @@ static int cmd_info(char *args){
 	if(sub_args == NULL)cmd_err(1, "info");
 	else{
 		if(*sub_args == 'r')isa_reg_display();
-		else if(*sub_args == 'w')
-			;
+		else if(*sub_args == 'w')wp_display();
 		else cmd_err(0, "info");
 		}
 	return 0;
