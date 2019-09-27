@@ -77,6 +77,19 @@ void free_wp(WP *wp){
 	}
 }
 
+void wp_delete(int num){
+	int state = 0;
+	for(WP *p=head;p!=NULL;p=p->next){
+		if(p->NO == num){
+			free_wp(p);
+			printf("watchpoint %d deleted\n",num);
+			state = 1;
+			break;
+		}
+	}
+	if(state == 0)printf("no such watchpoint!\n");
+	return;
+}
 void wp_display(){
 	if(head==NULL){
 		printf("No watchpoints!\n");
