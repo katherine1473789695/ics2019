@@ -102,4 +102,23 @@ void wp_display(){
 	return;
 }
 
+bool check_watchpoint(){
+	WP *a = head;
+	bool flag = true,success;
+	uint32_t result;
+	if(a!=NULL){
+		for(;a!=NULL;a=a->next){
+			result = expr(a->expression,&success);
+			if(result!=a->value){
+				a->hit_time++;
+				printf("Hardware watchpoint %d: %s\n",a->NO,a->expression);
+				printf("Old value = %u\n",a->value);
+				printf("New value = %u\n",result);
+				a->value = result;
+				flag = false;
+			}
+		}
+	}
+	return flag;
+}
 

@@ -11,6 +11,7 @@ void cpu_exec(uint64_t);
 void isa_reg_display(void);
 void wp_display();
 void wp_delete(int num);
+WP* new_wp(char *s);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -127,6 +128,17 @@ static int cmd_d(char *args){
 	return 0;
 }
 
+static int cmd_w(char *args){
+	char *expression = strtok(NULL, " ");
+	if(expression == NULL)cmd_err(1,"w");
+	else{
+		WP *p = new_wp(expression);
+		printf("Hardware watchpoint %d: %s",p->NO,p->expression);
+	}
+	return 0;
+}
+
+
 static struct {
   char *name;
   char *description;
@@ -139,7 +151,8 @@ static struct {
   { "info", "Show information about registers with argument 'r' and show information about watchpoint with argument 'w'", cmd_info},
   { "x", "Print N 4-Bytes from the start address calculated from EXPR", cmd_x},
   { "p", "Print the value of the expression", cmd_p},
-  { "d", "delete watchpoints", cmd_d},
+  { "d", "Delete watchpoints", cmd_d},
+  { "w", "Add watchpoint information", cmd_w},
   /* TODO: Add more commands */
 
 };
