@@ -84,3 +84,5 @@ clean:
 	-rm -rf $(BUILD_DIR)
 	$(MAKE) -C tools/gen-expr clean
 	$(MAKE) -C tools/qemu-diff clean
+count:
+	wc -l `find -name *.[ch]`
