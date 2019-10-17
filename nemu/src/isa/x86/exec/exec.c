@@ -9,6 +9,7 @@ static inline void set_width(int width) {
 }
 
 static make_EHelper(2byte_esc);
+make_EHelper(call);
 
 #define make_group(name, item0, item1, item2, item3, item4, item5, item6, item7) \
   static OpcodeEntry concat(opcode_table_, name) [8] = { \
@@ -110,7 +111,7 @@ static OpcodeEntry opcode_table [512] = {
   /* 0xdc */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xe0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xe4 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0xe8 */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0xe8 */	IDEX(J, call), EMPTY, EMPTY, EMPTY,
   /* 0xec */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xf0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xf4 */	EMPTY, EMPTY, IDEXW(E, gp3, 1), IDEX(E, gp3),
