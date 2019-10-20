@@ -8,8 +8,11 @@ make_EHelper(test) {
 }
 
 make_EHelper(and) {
-  TODO();
-
+  //TODO();
+  rtl_and(&s0,&id_dest->val,&id_src->val);
+  operand_write(id_dest,&s0);
+  //donot realize the change of eflags
+  
   print_asm_template2(and);
 }
 
