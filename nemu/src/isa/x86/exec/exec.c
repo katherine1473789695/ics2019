@@ -16,6 +16,7 @@ make_EHelper(xor);
 make_EHelper(ret);
 make_EHelper(lea);
 make_EHelper(and);
+make_EHelper(add);
 
 #define make_group(name, item0, item1, item2, item3, item4, item5, item6, item7) \
   static OpcodeEntry concat(opcode_table_, name) [8] = { \
@@ -59,7 +60,7 @@ make_group(gp7,
 /* TODO: Add more instructions!!! */
 
 static OpcodeEntry opcode_table [512] = {
-  /* 0x00 */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0x00 */	EMPTY, IDEX(G2E,add), EMPTY, EMPTY,
   /* 0x04 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x08 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x0c */	EMPTY, EMPTY, EMPTY, EX(2byte_esc),
