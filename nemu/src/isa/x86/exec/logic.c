@@ -12,6 +12,10 @@ make_EHelper(and) {
   rtl_and(&s0,&id_dest->val,&id_src->val);
   operand_write(id_dest,&s0);
   //donot realize the change of eflags
+  rtl_update_ZFSF(&s0,id_dest->width);
+  s1=0;
+  rtl_set_OF(&s1);
+  rtl_set_CF(&s1);
   
   print_asm_template2(and);
 }
