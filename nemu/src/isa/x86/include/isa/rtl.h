@@ -105,7 +105,7 @@ static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
   //TODO();
   assert(width==1||width==2||width==4);
-  t0 = (~(0xffffffff << (8*width)));
+  t0 = (~(0xffffffff << (8*width-1)<<1));
   //printf("%u ",t0);
   //printf("%u",*result);
   t1 = ((*result & t0) == 0);
