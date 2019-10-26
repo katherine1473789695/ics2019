@@ -25,3 +25,4 @@ make_EHelper(inc);
 make_EHelper(pop);
 make_EHelper(nop);
 make_EHelper(dec);
+make_EHelper(jmp);
