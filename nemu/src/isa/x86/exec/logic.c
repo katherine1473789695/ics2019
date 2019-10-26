@@ -6,6 +6,7 @@ make_EHelper(test) {
   rtl_and(&s0,&id_dest->val,&id_src->val);
   printf("%u %u",id_dest->val,id_src->val);
   rtl_update_ZFSF(&s0,id_dest->width);
+  printf("%u ",cpu.eflags.ZF);
   s0=0;
   rtl_set_CF(&s0);
   rtl_set_OF(&s0);
