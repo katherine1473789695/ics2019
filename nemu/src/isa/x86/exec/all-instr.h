@@ -38,3 +38,4 @@ make_EHelper(sbb);
 make_EHelper(adc);
 make_EHelper(cltd);
 make_EHelper(idiv);
+make_EHelper(call_rm);
