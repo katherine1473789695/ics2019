@@ -29,3 +29,4 @@ make_EHelper(jmp);
 make_EHelper(imul2);
 make_EHelper(movsx);
 make_EHelper(shl);
+make_EHelper(not);
