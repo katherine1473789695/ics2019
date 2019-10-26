@@ -21,6 +21,7 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
     case CC_BE:
     case CC_S:
     case CC_L:
+    case CC_NL: *dest = (cpu.eflags.SF == cpu.eflags.OF);break;
     case CC_LE:
       
     default: panic("should not reach here");
