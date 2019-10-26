@@ -107,6 +107,7 @@ static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   assert(width==1||width==2||width==4);
   t0 = ~(-1 << (8*width));
   printf("%u ",t0);
+  printf("%u",*result);
   t1 = ((*result & t0) == 0);
   rtl_set_ZF(&t1);
 }
