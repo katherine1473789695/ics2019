@@ -33,3 +33,4 @@ make_EHelper(not);
 make_EHelper(imul1);
 make_EHelper(or);
 make_EHelper(shr);
+make_EHelper(sar);
