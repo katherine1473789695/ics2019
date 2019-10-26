@@ -31,6 +31,7 @@ make_EHelper(sub) {
 make_EHelper(cmp) {
   //TODO();
   rtl_sub(&s0,&id_dest->val,&id_src->val);
+  operand_write(id_dest,&s0);
   //printf("%u %u %u ",s0,id_dest->val,id_src->val);
   rtl_update_ZFSF(&s0,id_dest->width);
   //printf("%u",cpu.eflags.ZF);
