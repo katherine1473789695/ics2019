@@ -86,7 +86,8 @@ void* memcpy(void* out, const void* in, size_t n) {
 int memcmp(const void* s1, const void* s2, size_t n){
   char *t1=(char *)s1;
   char *t2=(char *)s2;
-  for(size_t i=0;i<n;i++){
+  size_t i;
+  for(i=0;i<n;i++){
     if((*t1)<(*t2))return -1;
     else if((*t1)>(*t2))return 1;
     t1++;
