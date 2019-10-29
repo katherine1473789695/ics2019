@@ -34,7 +34,7 @@ make_EHelper(cmp) {
   operand_write(id_dest,&s0);
   //printf("%u %u %u ",s0,id_dest->val,id_src->val);
   rtl_update_ZFSF(&s0,id_dest->width);
-  printf("%u\n",cpu.eflags.ZF);
+  //printf("%u\n",cpu.eflags.ZF);
   rtl_is_sub_carry(&s1,&s0,&id_dest->val);
   rtl_set_CF(&s1);
   rtl_is_sub_overflow(&s1,&s0,&id_dest->val,&id_src->val,id_dest->width);
