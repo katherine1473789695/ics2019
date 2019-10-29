@@ -52,7 +52,7 @@ static inline void rtl_is_sub_overflow(rtlreg_t* dest,
   else{
     t0=t0&0x1; //the sign of x
     t1=((0x1<<(8*width-1))& (*res))>>(8*width-1);
-    t1=t0&0x1; //the sign of result
+    t1=t1&0x1; //the sign of result
     //printf("%u %u\n",t1,t0);
     rtl_xor(&t0,&t0,&t1);
     *dest = t0;
