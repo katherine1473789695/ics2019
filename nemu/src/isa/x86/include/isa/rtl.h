@@ -46,6 +46,7 @@ static inline void rtl_is_sub_overflow(rtlreg_t* dest,
   //overflow when x and y have the opposite sign and res different from x
   t0 =  ((0x1<<(8*width-1))& (*src1))>>(8*width-1);  //x
   t1 =  ((0x1<<(8*width-1))& (*src2))>>(8*width-1);  //y
+  printf("%u %u   ",t0,t1);
   rtl_xor(&t0,&t0,&t1);
   if(t0==0) *dest=0;
   else{
