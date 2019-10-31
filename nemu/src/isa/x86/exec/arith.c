@@ -71,8 +71,19 @@ make_EHelper(dec) {
 }
 
 make_EHelper(neg) {
-  TODO();
+  //TODO();
+  rtl_not(&s0,&id_dest->val);
+  s2=1;
+  rtl_add(&s1,&s0,&s2);
+  operand_write(id_dest,&s1);
 
+  rtl_update_ZFSF(&s1,id_dest->width);
+  rtl_is_add_overflow(&s1,&s1,&s0,&s2,id_dest->width);
+  rtl_set_OF(&s1);
+  if(id_dest->val!=0)s1=1;
+  else s1=0;
+  rtl_set_CF(&s1);
+  
   print_asm_template1(neg);
 }
 
