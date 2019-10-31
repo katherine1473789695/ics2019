@@ -2,11 +2,12 @@
 #include <amdev.h>
 #include <nemu.h>
 
+static uint32_t *rtc_port_base;
 size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
     case _DEVREG_TIMER_UPTIME: {
       _DEV_TIMER_UPTIME_t *uptime = (_DEV_TIMER_UPTIME_t *)buf;
-      unsigned long long time = inl(0x48);
+      unsigned long long time = inl(RTC_ADDR)-*rtc_port_base;
       uptime->hi = time>>32;
       uptime->lo = time & 0xffffffff;
       return sizeof(_DEV_TIMER_UPTIME_t);
