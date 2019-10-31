@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
 		else printf("%s\t%u\n",result,count_result);
 	}*/
 	/* Receive commands from user. */
+	is_batch_mode=false;
   ui_mainloop(is_batch_mode);
 
   return 0;
