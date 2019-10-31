@@ -46,3 +46,4 @@ make_EHelper(in);
 make_EHelper(div);
 make_EHelper(cwtl);
 make_EHelper(neg);
+make_EHelper(imul3);
