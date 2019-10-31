@@ -44,3 +44,4 @@ make_EHelper(mul);
 make_EHelper(out);
 make_EHelper(in);
 make_EHelper(div);
+make_EHelper(cwtl);
