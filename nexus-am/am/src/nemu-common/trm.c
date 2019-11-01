@@ -23,7 +23,7 @@ void _halt(int code) {
 
 void _trm_init() {
   extern const char _start;
-  const char *mainargs = &_start - 0x100000;
+  const char *mainargs = &_start - 0x200000;
   int ret = main(mainargs);
   _halt(ret);
 }
