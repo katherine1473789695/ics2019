@@ -16,6 +16,8 @@ int printf(const char *fmt, ...) {
   return length;
 }
 
+
+
 int vsprintf(char *out, const char *fmt, va_list ap) {
   int length;
   const char* a;
