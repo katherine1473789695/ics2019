@@ -98,6 +98,20 @@ make_EHelper(not) {
 }
 
 make_EHelper(rol){
+  s0=id_src->val;
+  while(s0!=0){
+    s1=(0x1<<(id_dest->width*8-1));
+    s1= ((s1&id_dest->val)>>(8*id_dest->width-1))&0x1;
+    rtl_shli(&id_dest->val,&id_dest->val,1);
+    id_dest->val=id_dest->val|s1;
+    s0--;
+  }
+  rtl_set_CF(&s1);
+  if(id_src->val==1){
+    s1=s1^((id_dest->val>>(id_dest->width*8-1))&0x1);
+  }
+  rtl_set_OF(&s1);
+  operand_write(id_dest,&id_dest->val);
 
-  
+  print_asm_template2(rol);
 }
