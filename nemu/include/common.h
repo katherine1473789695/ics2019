@@ -17,7 +17,7 @@
 #include <assert.h>
 #include <string.h>
 
-volatile static int dummy;
+//volatile static int dummy;
 
 typedef uint8_t bool;
 
