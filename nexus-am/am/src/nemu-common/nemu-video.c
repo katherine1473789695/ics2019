@@ -32,7 +32,7 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
       uint32_t *fb=(uint32_t *)(uintptr_t)FB_ADDR;
       for(int i=0;i<h;i++){
         for(int j=0;j<w;j++){
-          fb[(y+i)*W+x+j]=pixels[i];
+          fb[(y+i)*W+x+j]=pixels[i*w+j];
         }
       }
     
