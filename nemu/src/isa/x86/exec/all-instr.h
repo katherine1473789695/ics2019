@@ -49,3 +49,4 @@ make_EHelper(neg);
 make_EHelper(imul3);
 make_EHelper(lidt);
 make_EHelper(rol);
+make_EHelper(int);
