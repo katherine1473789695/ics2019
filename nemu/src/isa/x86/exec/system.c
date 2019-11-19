@@ -40,8 +40,10 @@ make_EHelper(int) {
 make_EHelper(iret) {
   //TODO();
   rtl_pop(&s0);
-  decinfo.jmp_pc = s0;
-  decinfo.is_jmp = 1;
+  //decinfo.jmp_pc = s0;
+  //decinfo.is_jmp = 1;
+  decinfo.is_jmp=0;
+  decinfo.seq_pc = s0;
   rtl_pop(&s0);
   cpu.cs = s0;
   rtl_pop(&s0);
