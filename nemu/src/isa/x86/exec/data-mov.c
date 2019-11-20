@@ -58,6 +58,19 @@ make_EHelper(leave) {
   print_asm("leave");
 }
 
+make_EHelper(movsb){
+  //s0=cpu.esi;
+  s1=cpu.esi;
+  s2=cpu.edi;
+  rtl_lm(&s0,&s1,1);
+  rtl_sm(&s2,&s0,1);
+  cpu.esi+=1;
+  cpu.edi+=1;
+  print_asm("movsb");
+
+
+}
+
 make_EHelper(cltd) {
   if (decinfo.isa.is_operand_size_16) {
     //TODO();
