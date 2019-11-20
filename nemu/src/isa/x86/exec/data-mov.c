@@ -62,8 +62,8 @@ make_EHelper(movsb){
   //s0=cpu.esi;
   s1=cpu.esi;
   s2=cpu.edi;
-  rtl_lm(&s0,&s1,1);
-  rtl_sm(&s2,&s0,1);
+  //rtl_lm(&s0,&s1,1);
+  //rtl_sm(&s2,&s0,1);
   cpu.esi+=1;
   cpu.edi+=1;
   print_asm("movsb");
