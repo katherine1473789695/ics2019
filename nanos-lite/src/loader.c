@@ -18,9 +18,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr elfheader;
   Elf_Phdr programheader;
   ramdisk_read(&elfheader,0,sizeof(Elf_Ehdr));
+  uint16_t num = elfheader.e_phnum;
   printf("%x\n",elfheader.e_phoff);
   printf("%x\n",elfheader.e_phentsize);
-  printf("%x\n",elfheader.e_phnum);
+  printf("%x\n",num);
   printf("%x\n",get_ramdisk_size());
   for(uint32_t i=0;i<elfheader.e_phnum;i++){
     ramdisk_read(&programheader,elfheader.e_phoff+i*elfheader.e_phentsize,elfheader.e_phentsize);
