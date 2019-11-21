@@ -62,6 +62,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         *str++=(char)num;
         break;
       }
+      case 'p':
       case 'x':{
         uint32_t num = va_arg(ap,uint32_t);
         int i=0;
@@ -82,6 +83,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         }
         break;
       }
+    
       default:break;
     }
   }
