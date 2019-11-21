@@ -21,6 +21,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   ramdisk_read(&elfheader,0,sizeof(Elf_Ehdr));
   for(uint16_t i=0;i<elfheader.e_phnum;i++){
     ramdisk_read(&programheader,elfheader.e_phoff+i*elfheader.e_phentsize,sizeof(Elf_Phdr));
+    printf("%x\n",programheader.p_type);
     printf("%x\n",programheader.p_vaddr);
   }
   //ramdisk_read(&programheader,elfheader.e_phoff,sizeof(Elf_Phdr));
