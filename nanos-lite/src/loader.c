@@ -16,9 +16,10 @@ size_t get_ramdisk_size();
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   Elf_Ehdr elfheader;
-  //Elf_Phdr programheader;
+  Elf_Phdr programheader;
 
   ramdisk_read(&elfheader,0,sizeof(Elf_Ehdr));
+  ramdisk_read(&programheader,elfheader.e_phoff,sizeof(Elf_Phdr));
   //uint16_t num = elfheader.e_phnum;
   //uint32_t offset= elfheader.e_phoff;
   //uint16_t size=elfheader.e_phentsize;
