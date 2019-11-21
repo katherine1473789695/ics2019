@@ -26,8 +26,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   printf("%x\n",num);
   printf("%x\n",get_ramdisk_size());
   while(num--){
-
-    ramdisk_read(&programheader,elfheader.e_phoff+elfheader.e_phentsize,elfheader.e_phentsize);
+    ramdisk_read(&programheader,offset,elfheader.e_phentsize);
     if(programheader.p_type==PT_LOAD){
       void* buf= NULL;
       ramdisk_read(&buf,programheader.p_offset,programheader.p_filesz);
