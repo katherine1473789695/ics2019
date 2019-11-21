@@ -21,8 +21,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   ramdisk_read(&elfheader,0,sizeof(Elf_Ehdr));
   uint16_t num = elfheader.e_phnum;
   uint32_t offset= elfheader.e_phoff;
+  uint16_t size=elfheader.e_phentsize;
   printf("%x\n",offset);
-  printf("%x\n",elfheader.e_phentsize);
+  printf("%x\n",size);
   printf("%x\n",num);
   printf("%x\n",get_ramdisk_size());
   while(num--){
@@ -30,6 +31,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     if(programheader.p_type==PT_LOAD){
       void* buf= NULL;
       ramdisk_read(&buf,programheader.p_offset,programheader.p_filesz);
+      offset+=size;
     }
   }
   printf("%x",elfheader.e_phentsize);
