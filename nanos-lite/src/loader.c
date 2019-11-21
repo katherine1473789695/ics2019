@@ -28,8 +28,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       //vaddr_write(programheader.p_vaddr,&buf,programheader.p_filesz);
       memcpy((void*)programheader.p_vaddr,&buf,programheader.p_filesz);
     }
-    printf("%x\n",programheader.p_type);
-    printf("%x\n",programheader.p_vaddr);
+    //printf("%x\n",programheader.p_type);
+    //printf("%x\n",programheader.p_vaddr);
   }
   //ramdisk_read(&programheader,elfheader.e_phoff,sizeof(Elf_Phdr));
   
