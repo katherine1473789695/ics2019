@@ -22,6 +22,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   uint16_t num = elfheader.e_phnum;
   uint32_t offset= elfheader.e_phoff;
   uint16_t size=elfheader.e_phentsize;
+  uint32_t entry = elfheader.e_entry;
   printf("%x\n",offset);
   printf("%x\n",size);
   printf("%x\n",num);
@@ -34,10 +35,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       offset+=size;
     }
   }
-  printf("%x",elfheader.e_phentsize);
+  //printf("%x\n",);
   printf("%x",elfheader.e_phnum);
-  printf("%x",elfheader.e_entry);
-  return elfheader.e_entry;
+  printf("%x",entry);
+  return entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
