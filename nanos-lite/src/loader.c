@@ -15,10 +15,10 @@ size_t get_ramdisk_size();
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
-  char buf[get_ramdisk_size()];
-  ramdisk_read(&buf,0,get_ramdisk_size());
-  printf("%x %x %x %x",buf[24],buf[25],buf[26],buf[27]);
-  return 0;
+  uintptr_t program_entry;
+  ramdisk_read(&program_entry,24,4);
+  printf("%x",program_entry);
+  return program_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
