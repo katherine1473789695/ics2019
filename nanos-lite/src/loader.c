@@ -17,7 +17,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   char buf[get_ramdisk_size()];
   ramdisk_read(&buf,0,get_ramdisk_size());
-  printf("%s",buf);
+  printf("%s",buf[24]);
   return 0;
 }
 
