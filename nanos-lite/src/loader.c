@@ -1,5 +1,6 @@
 #include "proc.h"
 #include <elf.h>
+#include "memory.h"
 
 #ifdef __ISA_AM_NATIVE__
 # define Elf_Ehdr Elf64_Ehdr
@@ -21,6 +22,11 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   ramdisk_read(&elfheader,0,sizeof(Elf_Ehdr));
   for(uint16_t i=0;i<elfheader.e_phnum;i++){
     ramdisk_read(&programheader,elfheader.e_phoff+i*elfheader.e_phentsize,sizeof(Elf_Phdr));
+    if(programheader.p_type == PT_LOAD){
+      //uint8_t buf[programheader.p_filesz];
+      ramdisk_read(&programheader.p_vaddr,programheader.p_offset,programheader.p_filesz);
+      //vaddr_write(programheader.p_vaddr,&buf,programheader.p_filesz);
+    }
     printf("%x\n",programheader.p_type);
     printf("%x\n",programheader.p_vaddr);
   }
