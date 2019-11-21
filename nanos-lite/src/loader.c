@@ -15,19 +15,10 @@ size_t get_ramdisk_size();
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
-  uintptr_t program_entry;
-  uint32_t seg_off;
-  uint16_t shentsize;
-  uint16_t shnum;
-  ramdisk_read(&program_entry,24,4);
-  ramdisk_read(&seg_off,32,4);
-  ramdisk_read(&shentsize,46,2);
-  ramdisk_read(&shnum,48,2);
-  printf("%x\n",program_entry);
-  printf("%x\n",seg_off);
-  printf("%x\n",shentsize);
-  printf("%x\n",shnum);
-  return program_entry;
+  Elf_Ehdr elfheader;
+  ramdisk_read(&elfheader,0,sizeof(Elf_Ehdr));
+  printf("%x",elfheader.e_entry);
+  return elfheader.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
