@@ -29,7 +29,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   while(num--){
     ramdisk_read(&programheader,offset,size);
     if(programheader.p_type==PT_LOAD){
-      ramdisk_read(&programheader.p_vaddr,programheader.p_offset,programheader.p_filesz);
+      uint32_t data;
+      ramdisk_read(&data,programheader.p_offset,programheader.p_filesz);
       offset+=size;
     }
   }
