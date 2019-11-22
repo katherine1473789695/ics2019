@@ -11,6 +11,7 @@ void __am_vecnull();
 _Context* __am_irq_handle(_Context *c) {
   _Context *next = c;
   //_putc(c->edi);
+  _putc(c->eax);
   if (user_handler) {
     _Event ev = {0};
     switch (c->irq) {
