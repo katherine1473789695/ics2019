@@ -14,7 +14,7 @@ _Context* do_syscall(_Context *c) {
   a[3] = c->GPR4;
   uintptr_t result=-1;
   //printf("%x\n",c->GPR1);
-  printf("%d\n",a[0]);
+  //printf("%d\n",a[0]);
   switch (a[0]) {
     case SYS_exit:sys_exit(a[1]);break;
     case SYS_yield: result=sys_yield();break;
