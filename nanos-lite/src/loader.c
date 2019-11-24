@@ -27,6 +27,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       ramdisk_read(&buf,programheader.p_offset,programheader.p_filesz);
       //vaddr_write(programheader.p_vaddr,&buf,programheader.p_filesz);
       memcpy((void*)programheader.p_vaddr,&buf,programheader.p_filesz);
+      memset((void*)(programheader.p_vaddr+programheader.p_filesz),0,(programheader.p_memsz-programheader.p_filesz));
     }
     //printf("%x\n",programheader.p_type);
     //printf("%x\n",programheader.p_vaddr);
