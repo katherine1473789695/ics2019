@@ -14,6 +14,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
    vaddr_t high_addr = vaddr_read(idt_addr+4,4) & 0xffff0000;
    decinfo.jmp_pc = high_addr | low_addr;
    decinfo.is_jmp = 1;
+   printf("%x",decinfo.jmp_pc);
    rtl_j(decinfo.jmp_pc);
 
 }
