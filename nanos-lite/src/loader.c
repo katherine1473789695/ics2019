@@ -12,26 +12,43 @@
 
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t get_ramdisk_size();
+int fs_open(const char *pathname, int flags, int mode);
+size_t fs_read(int fd,void *buf,size_t len);
+int fs_close(int fd);
 //static void* buf;
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  //TODO();
   Elf_Ehdr elfheader;
   Elf_Phdr programheader;
-
-  ramdisk_read(&elfheader,0,sizeof(Elf_Ehdr));
-  for(uint16_t i=0;i<elfheader.e_phnum;i++){
-    ramdisk_read(&programheader,elfheader.e_phoff+i*elfheader.e_phentsize,sizeof(Elf_Phdr));
-    if(programheader.p_type == PT_LOAD){
-      uint8_t buf[programheader.p_filesz];
-      ramdisk_read(&buf,programheader.p_offset,programheader.p_filesz);
-      //vaddr_write(programheader.p_vaddr,&buf,programheader.p_filesz);
-      memcpy((void*)programheader.p_vaddr,&buf,programheader.p_filesz);
-      memset((void*)(programheader.p_vaddr+programheader.p_filesz),0,(programheader.p_memsz-programheader.p_filesz));
+  int fd = fs_open(filename,0,0);
+  if(fd!=-1){
+    fs_read(fd,&elfheader,sizeof(Elf_Ehdr));
+    for(uint16_t i=0;i<elfheader.e_phnum;i++){
+      fs_read(fd,&programheader,sizeof(Elf_Phdr));
+      if(programheader.p_type == PT_LOAD){
+        uint8_t buf[programheader.p_filesz];
+        ramdisk_read(&buf,programheader.p_offset,programheader.p_filesz);
+        memcpy((void*)programheader.p_vaddr,&buf,programheader.p_filesz);
+        memset((void*)(programheader.p_vaddr+programheader.p_filesz),0,(programheader.p_memsz-programheader.p_filesz));
+      }
     }
-    //printf("%x\n",programheader.p_type);
-    //printf("%x\n",programheader.p_vaddr);
   }
+  fs_close(fd);
+  //TODO();
+  //Elf_Ehdr elfheader;
+  //Elf_Phdr programheader;
+
+  //ramdisk_read(&elfheader,0,sizeof(Elf_Ehdr));
+  //for(uint16_t i=0;i<elfheader.e_phnum;i++){
+    //ramdisk_read(&programheader,elfheader.e_phoff+i*elfheader.e_phentsize,sizeof(Elf_Phdr));
+    //if(programheader.p_type == PT_LOAD){
+      //uint8_t buf[programheader.p_filesz];
+      //ramdisk_read(&buf,programheader.p_offset,programheader.p_filesz);
+      //vaddr_write(programheader.p_vaddr,&buf,programheader.p_filesz);
+      //memcpy((void*)programheader.p_vaddr,&buf,programheader.p_filesz);
+      //memset((void*)(programheader.p_vaddr+programheader.p_filesz),0,(programheader.p_memsz-programheader.p_filesz));
+    //}
+  //}
   //ramdisk_read(&programheader,elfheader.e_phoff,sizeof(Elf_Phdr));
   
   //uint16_t num = elfheader.e_phnum;
