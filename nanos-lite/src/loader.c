@@ -1,5 +1,6 @@
 #include "proc.h"
 #include <elf.h>
+//#include "fs.c"
 
 
 #ifdef __ISA_AM_NATIVE__
@@ -23,8 +24,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename,0,0);
   if(fd!=-1){
     fs_read(fd,&elfheader,sizeof(Elf_Ehdr));
-    printf("%x %x \n",sizeof(Elf_Ehdr),elfheader.e_phoff);
-    fs_read(fd,&programheader,elfheader.e_phoff-sizeof(Elf_Ehdr));
+    //printf("%x %x \n",sizeof(Elf_Ehdr),elfheader.e_phoff);
+    //fs_read(fd,&programheader,elfheader.e_phoff-sizeof(Elf_Ehdr));
     for(uint16_t i=0;i<elfheader.e_phnum;i++){
       fs_read(fd,&programheader,sizeof(Elf_Phdr));
       //ramdisk_read(&programheader,elfheader.e_phoff+i*elfheader.e_phentsize,sizeof(Elf_Phdr));
