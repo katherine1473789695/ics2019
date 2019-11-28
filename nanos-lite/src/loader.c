@@ -1,6 +1,6 @@
 #include "proc.h"
 #include <elf.h>
-//#include "fs.c"
+#include "fs.h"
 
 
 #ifdef __ISA_AM_NATIVE__
@@ -16,7 +16,7 @@ size_t get_ramdisk_size();
 int fs_open(const char *pathname, int flags, int mode);
 size_t fs_read(int fd,void *buf,size_t len);
 int fs_close(int fd);
-//static Finfo file_table;
+extern Finfo file_table;
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr elfheader;
