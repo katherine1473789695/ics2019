@@ -3,6 +3,7 @@
 
 int main() {
   FILE *fp = fopen("/share/texts/num", "r+");
+  printf("here\n");
   assert(fp);
   printf("here\n");
 
