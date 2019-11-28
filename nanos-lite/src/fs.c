@@ -106,3 +106,36 @@ size_t fs_write(int fd,const void *buf,size_t len){
   }
   return write;
 }
+
+size_t fs_lseek(int fd,size_t offset,int whence){
+  if(fd==FD_STDIN||fd==FD_STDOUT||fd==FD_STDERR){
+    assert(0);
+    return 0;
+  }
+  Finfo *f = &file_table[fd];
+  size_t result=-1;
+  switch(whence){
+    case SEEK_SET:{
+      if(0<=offset && offset<=f->size){
+        f->open_offset = offset;
+        result=f->open_offset;
+      }
+      break;
+    }
+    case SEEK_CUR:{
+      if((offset+f->open_offset>=0)&&(offset+f->open_offset<=f->size)){
+        f->open_offset+=offset;
+        result = f->open_offset;
+      }
+      break;
+    }
+    case SEEK_END:{
+      if((offset+f->size>=0)&&(offset+f->size<=f->size)){
+        f->open_offset = f->size+offset;
+        result = f->open_offset;
+      }
+      break;
+    }
+  }
+  return result;
+}
