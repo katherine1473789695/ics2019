@@ -2,11 +2,11 @@
 #include <assert.h>
 
 int main() {
-  printf("here\n");
-  //FILE *fp = fopen("/share/texts/num", "r+");
-  printf("here\n");
+  //printf("here\n");
+  FILE *fp = fopen("/share/texts/num", "r+");
+  //printf("here\n");
   assert(fp);
-  printf("here\n");
+  //printf("here\n");
 
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);

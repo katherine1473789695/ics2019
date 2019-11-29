@@ -5,6 +5,11 @@
 int sys_yield();
 void sys_exit(uintptr_t arg);
 size_t sys_write(int fd,const void *buf,size_t count);
+int fs_open(const char *pathname, int flags, int mode);
+size_t fs_read(int fd,void *buf,size_t len);
+int fs_close(int fd);
+size_t fs_write(int fd,const void *buf,size_t len);
+size_t fs_lseek(int fd,size_t offset,int whence);
 
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
@@ -18,7 +23,11 @@ _Context* do_syscall(_Context *c) {
   switch (a[0]) {
     case SYS_exit:sys_exit(a[1]);break;
     case SYS_yield: result=sys_yield();break;
-    case SYS_write: result = sys_write(a[1],(void*)a[2],a[3]);break;
+    case SYS_open: result=fs_open((char*)a[1],a[2],a[3]);break;
+    case SYS_read: result = fs_read(a[1],(void*)a[2],a[3]);break;
+    case SYS_write: result = fs_write(a[1],(void*)a[2],a[3]);break;
+    case SYS_close: result = fs_close(a[1]);break;
+    case SYS_lseek: result = fs_lseek(a[1],a[2],a[3]);break;
     case SYS_brk: result=0;break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
@@ -36,11 +45,11 @@ void sys_exit(uintptr_t arg){
   _halt(arg);
 }
 
-size_t sys_write(int fd,const void *buf,size_t count){
-  if(fd==1||fd==2){
-    for(int i=0;i<count;i++){
-      _putc(((char *)buf)[i]);
-    }
-  }
-  return count;
-}
+//size_t sys_write(int fd,const void *buf,size_t count){
+  //if(fd==1||fd==2){
+    //for(int i=0;i<count;i++){
+      //_putc(((char *)buf)[i]);
+    //}
+  //}
+  //return count;
+//}
