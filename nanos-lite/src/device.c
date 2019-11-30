@@ -23,6 +23,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   Log("time: %d",time);
   sprintf(buf,"t \n");
   int key = read_key();
+  Log("key: %d",key);
   sprintf(buf,"%d\n",key);
   bool down =false;
   if(key & 0x8000){
