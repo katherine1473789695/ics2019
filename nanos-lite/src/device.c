@@ -21,21 +21,21 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   //Log("here");
   //uint32_t time = uptime();
   //Log("time: %d",time);
-  sprintf(buf,"t %d\n",uptime());
+  //sprintf(buf,"t %d\n",uptime());
   //sprintf(buf,"t \n");
-  //int key = read_key();
+  int key = read_key();
   //Log("key: %x",key);
-  //bool down =false;
-  //if(key & 0x8000){
-    //key ^=0x8000;
-    //down = true;
-  //}
-  //if(key == _KEY_NONE){
+  bool down =false;
+  if(key & 0x8000){
+    key ^=0x8000;
+    down = true;
+  }
+  if(key == _KEY_NONE){
     //uint32_t time = uptime();
-    //sprintf(buf,"t %d\n",uptime());
-  //}else{
-    //sprintf(buf,"%s %s\n",down ? "kd":"ku",keyname[key]);
-  ///}
+    sprintf(buf,"t %d\n",uptime());
+  }else{
+    sprintf(buf,"%s %s\n",down ? "kd":"ku",keyname[key]);
+  }
 
   return strlen(buf);
 }
