@@ -33,7 +33,7 @@ static Finfo file_table[] __attribute__((used)) = {
   {"stdin", 0, 0, 0, invalid_read, invalid_write},
   {"stdout", 0, 0, 0, invalid_read, serial_write},
   {"stderr", 0, 0, 0, invalid_read, serial_write},
-  {"/dev/fb", 0, 0, 0,invalid_read,fb_write},
+  {"/dev/fb", 0, 0, 0},
   {"/dev/events", 0, 0, 0, events_read, invalid_write},
   {"/dev/fbsync",0,0,0, invalid_read, fbsync_write},
   {"/proc/dispinfo",128,0,0, dispinfo_read, invalid_write},
@@ -72,7 +72,10 @@ size_t fs_read(int fd,void *buf,size_t len){
     read = f->read(buf,f->open_offset,len);
   }else{
     read = (f->open_offset+len>f->size) ? (f->size-f->open_offset):len;
-    ramdisk_read(buf,f->disk_offset+f->open_offset,read);
+    if(fd==FD_FB)fb_write(buf,f->open_offset,read);
+    else{
+      ramdisk_read(buf,f->disk_offset+f->open_offset,read);
+    }
     f->open_offset+=read;
   }
   //switch(fd){
