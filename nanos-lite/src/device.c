@@ -18,13 +18,14 @@ static const char *keyname[256] __attribute__((used)) = {
 
 size_t events_read(void *buf, size_t offset, size_t len) {
   int key = read_key();
+  printf("%d",key);
   bool down =false;
   //printf("%d",key);
   if(key & 0x8000){
     key ^=0x8000;
     down = true;
   }
-  if(key==_KEY_NONE){
+  if(key == _KEY_NONE){
     uint32_t time = uptime();
     sprintf(buf,"t %d\n",time);
   }else{
