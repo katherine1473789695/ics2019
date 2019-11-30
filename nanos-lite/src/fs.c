@@ -33,6 +33,7 @@ static Finfo file_table[] __attribute__((used)) = {
   {"stdin", 0, 0, 0, invalid_read, invalid_write},
   {"stdout", 0, 0, 0, invalid_read, serial_write},
   {"stderr", 0, 0, 0, invalid_read, serial_write},
+  {"/dev/events", 0, 0, 0, events_read, invalid_write},
 #include "files.h"
 };
 
@@ -59,20 +60,30 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 
 size_t fs_read(int fd,void *buf,size_t len){
+  assert(0<=fd && fd<NR_FILES);
   size_t read = -1;
-  switch(fd){
-    case FD_STDIN:
-    case FD_STDOUT:
-    case FD_STDERR:read=0;break;
-    default:{
-      assert(0<=fd && fd<NR_FILES);
-      Finfo *f=&file_table[fd];
-      read = (f->open_offset+len>f->size) ? (f->size-f->open_offset):len;
-      ramdisk_read(buf,f->disk_offset+f->open_offset,read);
-      f->open_offset+=read;
-      break;
-    }
+  Finfo *f = &file_table[fd];
+  if(f->read!=NULL){
+    read = f->read(buf,f->open_offset,len);
+  }else{
+    read = (f->open_offset+len>f->size) ? (f->size-f->open_offset):len;
+    ramdisk_read(buf,f->disk_offset+f->open_offset,read);
+    f->open_offset+=read;
   }
+  //switch(fd){
+    //case FD_STDIN:
+    //case FD_STDOUT:
+    //case FD_STDERR:read=0;break;
+    //case FD_EVENTS:
+    //default:{
+      //assert(0<=fd && fd<NR_FILES);
+      //Finfo *f=&file_table[fd];
+      //read = (f->open_offset+len>f->size) ? (f->size-f->open_offset):len;
+      //ramdisk_read(buf,f->disk_offset+f->open_offset,read);
+      //f->open_offset+=read;
+      //break;
+    //}
+  //}
 
   return read;
 }
