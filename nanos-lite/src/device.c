@@ -21,6 +21,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   Log("here");
   uint32_t time = uptime();
   Log("time: %d",time);
+  sprintf(buf,"t %d\n",uptime());
   int key = read_key();
   bool down =false;
   if(key & 0x8000){
