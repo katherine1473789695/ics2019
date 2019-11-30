@@ -16,7 +16,7 @@ typedef struct {
 
 
 
-enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB};
+enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB, FD_EVENTS, FD_FBSYNC, FD_DISPINFO};
 
 size_t invalid_read(void *buf, size_t offset, size_t len) {
   panic("should not reach here");
@@ -34,9 +34,9 @@ static Finfo file_table[] __attribute__((used)) = {
   {"stdout", 0, 0, 0, invalid_read, serial_write},
   {"stderr", 0, 0, 0, invalid_read, serial_write},
   {"/dev/fb", 0, 0, 0},
-  {"/dev/events", 0, 0, 0, events_read, invalid_write},
-  {"/dev/fbsync",0,0,0, invalid_read, fbsync_write},
-  {"/proc/dispinfo",128,0,0, dispinfo_read, invalid_write},
+  {"/dev/events", 0, 0, 0},
+  {"/dev/fbsync",0,0,0},
+  {"/proc/dispinfo",128,0,0},
 #include "files.h"
 };
 
@@ -72,7 +72,7 @@ size_t fs_read(int fd,void *buf,size_t len){
     read = f->read(buf,f->open_offset,len);
   }else{
     read = (f->open_offset+len>f->size) ? (f->size-f->open_offset):len;
-    if(fd==FD_FB)fb_write(buf,f->open_offset,read);
+    if(fd==FD_DISPINFO)dispinfo_read(buf,f->open_offset,read);
     else{
       ramdisk_read(buf,f->disk_offset+f->open_offset,read);
     }
@@ -113,7 +113,8 @@ size_t fs_write(int fd,const void *buf,size_t len){
     write = f->write(buf,f->open_offset,len);
   }else{
     write = (f->open_offset+len > f->size) ? (f->size-f->open_offset) : len;
-    ramdisk_write(buf,f->disk_offset+f->open_offset,write);
+    if(fd==FD_FB)fb_write(buf,f->open_offset,write);
+    else ramdisk_write(buf,f->disk_offset+f->open_offset,write);
     f->open_offset+=write;
   }
   //size_t write=-1;
