@@ -18,10 +18,10 @@ static const char *keyname[256] __attribute__((used)) = {
 
 size_t events_read(void *buf, size_t offset, size_t len) {
   //sprintf(buf,"t %d\n",uptime());
-  Log("here");
+  //Log("here");
   uint32_t time = uptime();
   Log("time: %d",time);
-  sprintf(buf,"t \n");
+  //sprintf(buf,"t \n");
   int key = read_key();
   Log("key: %d",key);
   sprintf(buf,"%d\n",key==_KEY_NONE);
