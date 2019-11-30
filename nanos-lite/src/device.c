@@ -20,10 +20,10 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   //sprintf(buf,"t %d\n",uptime());
   //Log("here");
   //uint32_t time = uptime();
-  //og("time: %d",time);
+  //Log("time: %d",time);
   //sprintf(buf,"t \n");
   int key = read_key();
-  //Log("key: %d",key);
+  //Log("key: %x",key);
   bool down =false;
   if(key & 0x8000){
     key ^=0x8000;
