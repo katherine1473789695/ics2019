@@ -114,6 +114,7 @@ size_t fs_write(int fd,const void *buf,size_t len){
   }else{
     write = (f->open_offset+len > f->size) ? (f->size-f->open_offset) : len;
     if(fd==FD_FB)fb_write(buf,f->open_offset,write);
+    else if(fd==FD_FBSYNC)fbsync_write(buf,f->open_offset,write);
     else ramdisk_write(buf,f->disk_offset+f->open_offset,write);
     f->open_offset+=write;
   }
