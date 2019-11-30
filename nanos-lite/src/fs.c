@@ -45,7 +45,7 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
-  printf("%d,%d\n",screen_width(),screen_height());
+  //printf("%d,%d\n",screen_width(),screen_height());
   file_table[FD_FB].size = screen_width()*screen_height()*4;
 }
 
@@ -73,10 +73,7 @@ size_t fs_read(int fd,void *buf,size_t len){
     read = f->read(buf,f->open_offset,len);
   }else{
     read = (f->open_offset+len>f->size) ? (f->size-f->open_offset):len;
-    if(fd==FD_DISPINFO)dispinfo_read(buf,f->open_offset,read);
-    else{
-      ramdisk_read(buf,f->disk_offset+f->open_offset,read);
-    }
+    ramdisk_read(buf,f->disk_offset+f->open_offset,read);
     f->open_offset+=read;
   }
   //switch(fd){
@@ -114,9 +111,7 @@ size_t fs_write(int fd,const void *buf,size_t len){
     write = f->write(buf,f->open_offset,len);
   }else{
     write = (f->open_offset+len > f->size) ? (f->size-f->open_offset) : len;
-    if(fd==FD_FB)fb_write(buf,f->open_offset,write);
-    else if(fd==FD_FBSYNC)fbsync_write(buf,f->open_offset,write);
-    else ramdisk_write(buf,f->disk_offset+f->open_offset,write);
+    ramdisk_write(buf,f->disk_offset+f->open_offset,write);
     f->open_offset+=write;
   }
   //size_t write=-1;
