@@ -86,25 +86,35 @@ size_t fs_offset(int fd){
 }
 
 size_t fs_write(int fd,const void *buf,size_t len){
+  assert(0<=fd && fd<NR_FILES);
   size_t write=-1;
-  switch(fd){
-    case FD_STDOUT:
-    case FD_STDERR:{
-      for(int i=0;i<len;i++){
-        _putc(((char *)buf)[i]);
-      }
-      write=len;
-      break;
-    }
-    default:{
-      assert(0<=fd && fd<NR_FILES);
-      Finfo *f = &file_table[fd];
-      write = (f->open_offset+len > f->size) ? (f->size-f->open_offset) : len;
-      ramdisk_write(buf,f->disk_offset+f->open_offset,write);
-      f->open_offset+=write;
-      break;
-    }
+  Finfo *f=&file_table[fd];
+  if(f->write!=NULL){
+    write = f->write(buf,f->open_offset,len);
+  }else{
+    write = (f->open_offset+len > f->size) ? (f->size-f->open_offset) : len;
+    ramdisk_write(buf,f->disk_offset+f->open_offset,write);
+    f->open_offset+=write;
   }
+  //size_t write=-1;
+  //switch(fd){
+    //case FD_STDOUT:
+    //case FD_STDERR:{
+      //for(int i=0;i<len;i++){
+        //_putc(((char *)buf)[i]);
+      //}
+      //write=len;
+      //break;
+    //}
+    //default:{
+      //assert(0<=fd && fd<NR_FILES);
+      //Finfo *f = &file_table[fd];
+      //write = (f->open_offset+len > f->size) ? (f->size-f->open_offset) : len;
+      //ramdisk_write(buf,f->disk_offset+f->open_offset,write);
+      //f->open_offset+=write;
+      //break;
+    //}
+  //}
   return write;
 }
 
