@@ -76,7 +76,6 @@ size_t fs_read(int fd,void *buf,size_t len){
   }else{
     read = (f->open_offset+len>f->size) ? (f->size-f->open_offset):len;
     ramdisk_read(buf,f->disk_offset+f->open_offset,read);
-    f->open_offset+=read;
   }
   //switch(fd){
     //case FD_STDIN:
@@ -92,7 +91,7 @@ size_t fs_read(int fd,void *buf,size_t len){
       //break;
     //}
   //}
-
+  f->open_offset+=read;
   return read;
 }
 
