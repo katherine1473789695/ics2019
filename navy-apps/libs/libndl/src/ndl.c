@@ -45,16 +45,16 @@ int NDL_OpenDisplay(int w, int h) {
 }
 
 int NDL_CloseDisplay() {
-  printf("open\n");
+  //printf("open\n");
   if (canvas) {
-    printf("ifn");
+    //printf("ifn");
     free(canvas);
   }
   return 0;
 }
 
 int NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  printf("hi\n");
+  //printf("hi\n");
   if (has_nwm) {
     for (int i = 0; i < h; i ++) {
       printf("\033[X%d;%d", x, y + i);
@@ -71,27 +71,27 @@ int NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
       }
     }
   }
-  printf("end\n");
+  //printf("end\n");
 }
 
 int NDL_Render() {
-  printf("new open\n");
+  //printf("new open\n");
   if (has_nwm) {
     fflush(stdout);
   } else {
-    printf("%d\n",canvas_h);
+    //printf("%d\n",canvas_h);
     for (int i = 0; i < canvas_h; i ++) {
       fseek(fbdev, ((i + pad_y) * screen_w + pad_x) * sizeof(uint32_t), SEEK_SET);
-      printf("before write\n");
+      //printf("before write\n");
       fwrite(&canvas[i * canvas_w], sizeof(uint32_t), canvas_w, fbdev);
-      printf("after write\n");
+      //printf("after write\n");
     }
     fflush(fbdev);
-    printf("a\n");
+    //printf("a\n");
     putc(0, fbsyncdev);
-    printf("b\n");
+    //printf("b\n");
     fflush(fbsyncdev);
-    printf("c\n");
+    //printf("c\n");
   }
 }
 
