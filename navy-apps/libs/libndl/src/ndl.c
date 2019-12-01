@@ -12,7 +12,7 @@ static void get_display_info();
 static int canvas_w, canvas_h, screen_w, screen_h, pad_x, pad_y;
 
 int NDL_OpenDisplay(int w, int h) {
-  printf("open\n");
+  //printf("open\n");
   if (!canvas) {
     NDL_CloseDisplay();
   }
@@ -27,21 +27,21 @@ int NDL_OpenDisplay(int w, int h) {
   } else {
     has_nwm = 0;
   }
-  printf("here\n");
-  printf("%d\n",has_nwm);
+  //printf("here\n");
+  //printf("%d\n",has_nwm);
   if (has_nwm) {
     printf("\033[X%d;%ds", w, h); fflush(stdout);
     evtdev = stdin;
   } else {
     get_display_info();
-    printf("get info\n");
+    //printf("get info\n");
     assert(screen_w >= canvas_w);
     assert(screen_h >= canvas_h);
     pad_x = (screen_w - canvas_w) / 2;
     pad_y = (screen_h - canvas_h) / 2;
     fbdev = fopen("/dev/fb", "w"); assert(fbdev);
     evtdev = fopen("/dev/events", "r"); assert(evtdev);
-    printf("dev/fb\n");
+    //printf("dev/fb\n");
     fbsyncdev = fopen("/dev/fbsync", "w"); assert(fbsyncdev);
     //printf("hello\n");
   }
