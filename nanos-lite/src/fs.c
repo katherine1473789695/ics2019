@@ -47,6 +47,7 @@ void init_fs() {
   // TODO: initialize the size of /dev/fb
   //printf("%d,%d\n",screen_width(),screen_height());
   file_table[FD_FB].size = screen_width()*screen_height()*4;
+  printf("%d\n",file_table[FD_FB].size);
 }
 
 
