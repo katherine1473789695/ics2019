@@ -60,7 +60,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   y = offset / screen_width();
   x = offset % screen_width();
   //printf("%d %d\n",x,y);
-  len = len>>2;
+  int lenth = len>>2;
 
   //len1 = len<= (screen_width()-x) ? len : screen_width()-x;
   //draw_rect((uint32_t*)buf,x,y,len1,1);
@@ -75,7 +75,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
     //draw_rect((uint32_t*)buf+len1+len2,0,y+len2/screen_width()+1,len3,1);
   //}
   //int w=screen_width(),x=(offset>>2)%w,y=(offset>>2)/w,tot=len>>2;
-	draw_rect((uint32_t *)buf,x,y,len,1);
+	draw_rect((uint32_t *)buf,x,y,lenth,1);
   return len;
 }
 
