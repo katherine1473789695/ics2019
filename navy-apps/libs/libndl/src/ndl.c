@@ -73,6 +73,7 @@ int NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 }
 
 int NDL_Render() {
+  printf("new open\n");
   if (has_nwm) {
     fflush(stdout);
   } else {
