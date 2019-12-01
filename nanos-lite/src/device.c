@@ -85,7 +85,7 @@ size_t fbsync_write(const void *buf, size_t offset, size_t len) {
 void init_device() {
   Log("Initializing devices...");
   _ioe_init();
-  Log("here\n");
+  //Log("here\n");
 
   // TODO: print the string to array `dispinfo` with the format
   // described in the Navy-apps convention
