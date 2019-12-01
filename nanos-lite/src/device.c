@@ -46,6 +46,7 @@ static char dispinfo[128] __attribute__((used)) = {};
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   //Log("dispinfo_read\n");
+  //if(len+offset>128)len=128-offset;
   if(len+offset>strlen(dispinfo))len=strlen(dispinfo)-offset;
   strncpy(buf, &dispinfo[offset], len);
   return len;
@@ -54,14 +55,12 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   //Log("fb_write\n");
   
-  //int x,y;
-  //int len1,len2,len3;
-  //offset = offset>>2;
-  //y = offset/ screen_width();
-  //x = offset% screen_width();
+  int x,y;
+  offset = offset>>2;
+  y = offset / screen_width();
+  x = offset % screen_width();
   //printf("%d %d\n",x,y);
-  //len = len>>2;
-  //len1=len2=len3=0;
+  len = len>>2;
 
   //len1 = len<= (screen_width()-x) ? len : screen_width()-x;
   //draw_rect((uint32_t*)buf,x,y,len1,1);
@@ -75,8 +74,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
     //len3 = len-len1-len2;
     //draw_rect((uint32_t*)buf+len1+len2,0,y+len2/screen_width()+1,len3,1);
   //}
-  int w=screen_width(),x=(offset>>2)%w,y=(offset>>2)/w,tot=len>>2;
-	draw_rect((uint32_t *)buf,x,y,tot,1);
+  //int w=screen_width(),x=(offset>>2)%w,y=(offset>>2)/w,tot=len>>2;
+	draw_rect((uint32_t *)buf,x,y,len,1);
   return len;
 }
 
