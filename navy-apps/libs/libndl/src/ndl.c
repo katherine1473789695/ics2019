@@ -85,8 +85,11 @@ int NDL_Render() {
       printf("after write\n");
     }
     fflush(fbdev);
+    printf("a\n");
     putc(0, fbsyncdev);
+    printf("b\n");
     fflush(fbsyncdev);
+    printf("c\n");
   }
 }
 
