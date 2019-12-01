@@ -77,6 +77,7 @@ int NDL_Render() {
   if (has_nwm) {
     fflush(stdout);
   } else {
+    printf("%d\n",canvas_h);
     for (int i = 0; i < canvas_h; i ++) {
       fseek(fbdev, ((i + pad_y) * screen_w + pad_x) * sizeof(uint32_t), SEEK_SET);
       printf("before write\n");
