@@ -101,6 +101,9 @@ int fs_close(int fd){
 size_t fs_offset(int fd){
   return file_table[fd].disk_offset;
 }
+size_t fs_openoffset(int fd){
+  return file_table[fd].open_offset;
+}
 
 size_t fs_write(int fd,const void *buf,size_t len){
   assert(0<=fd && fd<NR_FILES);
