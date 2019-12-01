@@ -91,7 +91,8 @@ size_t fs_read(int fd,void *buf,size_t len){
       //break;
     //}
   //}
-  f->open_offset+=read;
+  //f->open_offset+=read;
+  file_table[fd].open_offset+=read;
   return read;
 }
 
