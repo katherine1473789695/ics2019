@@ -5,7 +5,7 @@
 
 int printf(const char *fmt, ...) {
   va_list args;
-  char str[100];
+  char str[256];
   int length;
   va_start(args,fmt);
   length=vsprintf(str,fmt,args);
@@ -40,7 +40,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       case 'd':{
         int num=va_arg(ap,int);
         int i=0;
-        char nums[10];
+        char nums[20];
         if(num==0)nums[0]='0';
         else{
           if(num<0){
@@ -66,7 +66,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       case 'x':{
         uint32_t num = va_arg(ap,uint32_t);
         int i=0;
-        char nums[10];
+        char nums[20];
         if(num==0)nums[0]='0';
         else{
           while(num!=0){
