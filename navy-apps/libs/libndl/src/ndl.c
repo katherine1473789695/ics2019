@@ -45,7 +45,9 @@ int NDL_OpenDisplay(int w, int h) {
 }
 
 int NDL_CloseDisplay() {
+  printf("open\n");
   if (canvas) {
+    printf("ifn");
     free(canvas);
   }
   return 0;
