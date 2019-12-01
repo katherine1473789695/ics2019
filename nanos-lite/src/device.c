@@ -45,18 +45,20 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 static char dispinfo[128] __attribute__((used)) = {};
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  memcpy(buf, &dispinfo[offset], len);
+  if(len+offset>128)len=128-offset;
+  strncpy(buf, dispinfo+offset, len);
   return len;
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   //Log("fb_write\n");
+  
   int x,y;
   int len1,len2,len3;
-  //offset = offset>>2;
+  offset = offset>>2;
   y = offset/ screen_width();
   x = offset% screen_width();
-  //len = len>>2;
+  len = len>>2;
   len1=len2=len3=0;
 
   len1 = len<= screen_width()-x ? len : screen_width()-x;
