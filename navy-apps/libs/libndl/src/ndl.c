@@ -12,6 +12,7 @@ static void get_display_info();
 static int canvas_w, canvas_h, screen_w, screen_h, pad_x, pad_y;
 
 int NDL_OpenDisplay(int w, int h) {
+  printf("open\n");
   if (!canvas) {
     NDL_CloseDisplay();
   }
@@ -26,19 +27,21 @@ int NDL_OpenDisplay(int w, int h) {
   } else {
     has_nwm = 0;
   }
-
+  printf("here\n");
+  printf("%d\n",has_nwm);
   if (has_nwm) {
     printf("\033[X%d;%ds", w, h); fflush(stdout);
     evtdev = stdin;
   } else {
     get_display_info();
+    printf("get info\n");
     assert(screen_w >= canvas_w);
     assert(screen_h >= canvas_h);
     pad_x = (screen_w - canvas_w) / 2;
     pad_y = (screen_h - canvas_h) / 2;
     fbdev = fopen("/dev/fb", "w"); assert(fbdev);
     evtdev = fopen("/dev/events", "r"); assert(evtdev);
-    //printf("dev/fb\n");
+    printf("dev/fb\n");
     fbsyncdev = fopen("/dev/fbsync", "w"); assert(fbsyncdev);
     //printf("hello\n");
   }
@@ -142,18 +145,28 @@ int NDL_WaitEvent(NDL_Event *event) {
 }
 
 static void get_display_info() {
+  printf("before open dispinfo\n");
   FILE *dispinfo = fopen("/proc/dispinfo", "r");
+  printf("after open dispinfo\n");
   assert(dispinfo);
   screen_w = screen_h = 0;
   char buf[128], key[128], value[128], *delim;
+  printf("buf success\n");
   while (fgets(buf, 128, dispinfo)) {
+    printf("close\n");
     *(delim = strchr(buf, ':')) = '\0';
+    printf("hi\n");
     sscanf(buf, "%s", key);
+    printf("buf\n");
     sscanf(delim + 1, "%s", value);
+    //printf("close\n");
     if (strcmp(key, "WIDTH") == 0) sscanf(value, "%d", &screen_w);
     if (strcmp(key, "HEIGHT") == 0) sscanf(value, "%d", &screen_h);
+    
   }
+  
   fclose(dispinfo);
+  printf("close\n");
   assert(screen_w > 0 && screen_h > 0);
 }
 
