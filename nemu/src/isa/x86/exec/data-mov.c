@@ -71,6 +71,18 @@ make_EHelper(movsb){
 
 }
 
+make_EHelper(movsw){
+  //s0=cpu.esi;
+  //s1=cpu.esi;
+  //s2=cpu.edi;
+  rtl_lm(&s0,&cpu.esi,2);
+  rtl_sm(&cpu.edi,&s0,2);
+  cpu.esi+=2;
+  cpu.edi+=2;
+  print_asm("movsb");
+
+}
+
 make_EHelper(cltd) {
   if (decinfo.isa.is_operand_size_16) {
     //TODO();
