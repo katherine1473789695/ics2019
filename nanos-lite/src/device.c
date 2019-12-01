@@ -45,7 +45,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 static char dispinfo[128] __attribute__((used)) = {};
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  Log("dispinfo_read\n");
+  //Log("dispinfo_read\n");
   if(len+offset>128)len=128-offset;
   strncpy(buf, dispinfo+offset, len);
   return len;
