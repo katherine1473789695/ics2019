@@ -63,12 +63,12 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   len = len>>2;
   len1=len2=len3=0;
 
-  len1 = len<= screen_width()-x ? len : screen_width()-x;
+  len1 = len<= (screen_width()-x) ? len : screen_width()-x;
   draw_rect((uint32_t*)buf,x,y,len1,1);
 
   if((len>len1)&&((len-len1)>screen_width())){
     len2 = len-len1;
-    draw_rect((uint32_t*)buf+len1,0,y+1,screen_width(),len2/screen_width());
+    draw_rect((uint32_t*)buf+len1,0,y+1,screen_width(),len2/screen_width()+1);
   }
 
   if(len-len1-len2>0){
