@@ -69,6 +69,7 @@ int NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
       }
     }
   }
+  printf("end\n");
 }
 
 int NDL_Render() {
