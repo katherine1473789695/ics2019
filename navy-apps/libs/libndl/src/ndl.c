@@ -40,6 +40,7 @@ int NDL_OpenDisplay(int w, int h) {
     evtdev = fopen("/dev/events", "r"); assert(evtdev);
     printf("dev/fb\n");
     fbsyncdev = fopen("/dev/fbsync", "w"); assert(fbsyncdev);
+    printf("hello\n");
   }
 }
 
