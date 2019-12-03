@@ -225,4 +225,5 @@ static void display_menu(int n) {
   printf("========================================\n");
   printf("Please Choose.\n");
   fflush(stdout);
+  printf("afterflush\n");
 }
