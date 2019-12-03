@@ -81,13 +81,13 @@ int main(int argc, char *argv[], char *envp[]) {
 
   while (1) {
     display_menu(i_max);
-    printf("hi\n");
+    //printf("hi\n");
 
     NDL_Event e;
     do {
       NDL_WaitEvent(&e);
     } while (e.type != NDL_EVENT_KEYDOWN);
-    printf("%d\n",e.data);
+    //printf("%d\n",e.data);
 
     int i = -1;
     switch (e.data) {
@@ -224,6 +224,7 @@ static void display_menu(int n) {
 
   printf("========================================\n");
   printf("Please Choose.\n");
+  printf("here\n");
   fflush(stdout);
-  printf("afterflush\n");
+  //printf("afterflush\n");
 }
