@@ -1,5 +1,6 @@
 #include "common.h"
 #include "syscall.h"
+#include "proc.h"
 
 
 int sys_yield();
@@ -10,6 +11,7 @@ size_t fs_read(int fd,void *buf,size_t len);
 int fs_close(int fd);
 size_t fs_write(int fd,const void *buf,size_t len);
 size_t fs_lseek(int fd,size_t offset,int whence);
+void naive_uload(PCB *pcb, const char *filename);
 
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
@@ -29,6 +31,7 @@ _Context* do_syscall(_Context *c) {
     case SYS_close: result = fs_close(a[1]);break;
     case SYS_lseek: result = fs_lseek(a[1],a[2],a[3]);break;
     case SYS_brk: result=0;break;
+    case SYS_execve: naive_uload(NULL,(void *)a[1]);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
   c->GPRx=result;
