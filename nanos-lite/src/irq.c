@@ -1,10 +1,11 @@
 #include "common.h"
 _Context* do_syscall(_Context *c);
+_Context* schedule(_Context *prev);
 
 static _Context* do_event(_Event e, _Context* c) {
   //printf("%x\n",e.event);
   switch (e.event) {
-    case _EVENT_YIELD: Log("yield event");break;
+    case _EVENT_YIELD: return schedule(c);break;
     case _EVENT_SYSCALL: return do_syscall(c);break;
     default: panic("Unhandled event ID = %d", e.event);
   }
