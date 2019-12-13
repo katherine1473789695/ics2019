@@ -63,7 +63,7 @@ typedef struct {
     uint32_t base;
   }idtr;
 
-  rtlreg_t cs;
+  rtlreg_t cs, cr0, cr3;
 
 
 } CPU_state;
