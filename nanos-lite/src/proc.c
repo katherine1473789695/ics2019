@@ -23,7 +23,7 @@ void hello_fun(void *arg) {
 }
 
 void init_proc() {
-  context_kload(&pcb[0],"bin/init");
+  context_kload(&pcb[0],"bin/dummy");
   //context_uload(&pcb[1], "/bin/init");
 
   switch_boot_pcb();
