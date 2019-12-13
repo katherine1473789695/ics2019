@@ -19,6 +19,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
 }
 
 void init_mm() {
+  Log("here");
   pf = (void *)PGROUNDUP((uintptr_t)_heap.start);
   panic("hi");
   Log("free physical pages starting from %p", pf);
