@@ -9,6 +9,8 @@
 #define NR_PDE						1024
 #define NR_PTE						1024
 #define PT_SIZE						((NR_PTE) * (PAGE_SIZE))
+#define PDE_INDEX(addr)   ((addr >> 22) & (NR_PDE - 1))
+#define PTE_INDEX(addr)   ((addr >> 12) & (NR_PTE - 1))
 
 /* the Control Register 0 */
 typedef union CR0 {
