@@ -10,7 +10,7 @@ static paddr_t page_translate(vaddr_t addr){
   printf("%x\n",addr);
   pde.val = paddr_read(cr3.page_directory_base + PDE_INDEX(addr) * sizeof(PDE), sizeof(PDE));
   printf("%x\n",pde.val);
-  //printf("%x\n",pde.val);
+  printf("%lx\n",sizeof(PDE));
   assert(pde.present == 1);
   pte.val = paddr_read(pde.page_frame + PTE_INDEX(addr) * sizeof(PTE), sizeof(PTE));
   assert(pte.present == 1);
