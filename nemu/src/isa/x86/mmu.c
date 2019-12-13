@@ -23,7 +23,14 @@ uint32_t isa_vaddr_read(vaddr_t addr, int len) {
   cr0.val= cpu.cr0;
   if(cr0.paging){
     if((addr & PAGE_MASK) + len > PAGE_SIZE){
-      assert(0);
+      //assert(0);
+      int len1 = PAGE_SIZE-(addr & PAGE_MASK);
+      int len2 = len-len1;
+      paddr_t paddr1 = page_translate(addr);
+      paddr_t paddr2 = page_translate(addr+len1);
+      uint32_t data1 = paddr_read(paddr1,len1);
+      uint32_t data2 = paddr_read(paddr2,len2);
+      return (data2<<(len1<<3))|data1;
     }else{
       paddr_t paddr = page_translate(addr);
       return paddr_read(paddr, len);
