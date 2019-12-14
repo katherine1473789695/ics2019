@@ -11,9 +11,8 @@ void __am_get_cur_as(_Context *c);
 void __am_switch(_Context *c);
 
 _Context* __am_irq_handle(_Context *c) {
-  _putc('h');
-  _Context *next = c;
   __am_get_cur_as(c);
+  _Context *next = c;
   //_putc(c->edi);
   //_putc(c->eax);
   if (user_handler) {
