@@ -23,7 +23,7 @@ _Context* do_syscall(_Context *c) {
   //printf("%x\n",c->GPR1);
   //printf("%d\n",a[0]);
   switch (a[0]) {
-    case SYS_exit: naive_uload(NULL,"/bin/init");break;//sys_exit(a[1]);break;
+    case SYS_exit: sys_exit(a[1]);break;//naive_uload(NULL,"/bin/init");break;
     case SYS_yield: result=sys_yield();break;
     case SYS_open: result=fs_open((char*)a[1],a[2],a[3]);break;
     case SYS_read: result = fs_read(a[1],(void*)a[2],a[3]);break;
