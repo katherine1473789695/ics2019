@@ -41,6 +41,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         fs_lseek(fd,programheader.p_offset,SEEK_SET);
         void *vaddr, *paddr;
         vaddr = (void*)programheader.p_vaddr;
+        printf("%x\n",vaddr);
         for(size_t i=0,sz = fs_filesz(fd);i<sz;i+=PGSIZE){
           size_t read_bytes = ((sz-i)>=PGSIZE) ? PGSIZE : (sz-i);
           paddr = new_page(1);
