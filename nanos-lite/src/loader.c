@@ -29,7 +29,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Phdr programheader;
   int fd = fs_open(filename,0,0);
   if(fd!=-1){
-    printf("before read\n");
+    //printf("before read\n");
     fs_read(fd,&elfheader,sizeof(Elf_Ehdr));
     printf("%x\n",elfheader.e_entry);
     fs_lseek(fd,elfheader.e_phoff,SEEK_SET);
@@ -41,12 +41,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         fs_lseek(fd,programheader.p_offset,SEEK_SET);
         void *vaddr, *paddr;
         vaddr = (void*)programheader.p_vaddr;
-        printf("%x\n",vaddr);
+        //printf("%x\n",vaddr);
         for(size_t i=0,sz = programheader.p_filesz;i<sz;i+=PGSIZE){
           size_t read_bytes = ((sz-i)>=PGSIZE) ? PGSIZE : (sz-i);
-          printf("%x\n",read_bytes);
+          //printf("%x\n",read_bytes);
           paddr = new_page(1);
-          printf("%x\n",paddr);
+          //printf("%x\n",paddr);
           _map(&pcb->as,vaddr,paddr,0);
           fs_read(fd,paddr,read_bytes);
           //memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
@@ -64,7 +64,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   }
   fs_close(fd);
   //TODO();
-  printf("going out loader\n");
+  //printf("going out loader\n");
   return elfheader.e_entry;
 }
 
