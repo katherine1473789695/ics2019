@@ -48,7 +48,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
           paddr = new_page(1);
           printf("%x\n",paddr);
           _map(&pcb->as,vaddr,paddr,0);
-          fs_read(fd,paddr,read_bytes);
+          fs_read(fd,vaddr,read_bytes);
           //memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
         }
         //void *pa = new_page(1);
