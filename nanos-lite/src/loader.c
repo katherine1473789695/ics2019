@@ -38,7 +38,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       //ramdisk_read(&programheader,elfheader.e_phoff+i*elfheader.e_phentsize,sizeof(Elf_Phdr));
       if(programheader.p_type == PT_LOAD){
         fs_lseek(fd,programheader.p_offset,SEEK_SET);
-        fs_read(fd,(void *)programheader.p_vaddr,programheader.p_filesz);
+        void *pa = new_page(1);
+        _map(&pcb->as,(void *)programheader.p_vaddr,pa,0);
+        fs_read(fd,pa,programheader.p_filesz);
         //uint8_t buf[programheader.p_filesz];
         //ramdisk_read(&buf,programheader.p_offset+fs_offset(fd),programheader.p_filesz);
         //memcpy((void*)programheader.p_vaddr,&buf,programheader.p_filesz);
