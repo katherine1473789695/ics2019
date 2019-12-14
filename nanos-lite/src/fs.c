@@ -175,3 +175,7 @@ size_t fs_lseek(int fd,size_t offset,int whence){
   }
   return result;
 }
+
+size_t fs_filesz(int fd) {
+    return (0 <= fd && fd < NR_FILES) ? file_table[fd].size : 0;
+}
