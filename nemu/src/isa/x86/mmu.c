@@ -34,6 +34,7 @@ uint32_t isa_vaddr_read(vaddr_t addr, int len) {
       return (data2<<(len1<<3))|data1;
     }else{
       paddr_t paddr = page_translate(addr);
+      printf("%x\n",paddr);
       return paddr_read(paddr, len);
     }
   }else{
