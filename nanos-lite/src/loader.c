@@ -49,7 +49,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
           printf("%x\n",paddr);
           _map(&pcb->as,vaddr,paddr,0);
           fs_read(fd,paddr,read_bytes);
-          //memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
+          memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
         }
         //void *pa = new_page(1);
         //_map(&pcb->as,(void *)programheader.p_vaddr,pa,0);
