@@ -85,7 +85,7 @@ void context_uload(PCB *pcb, const char *filename) {
   Log("before loader");
   _protect(&pcb->as);
   uintptr_t entry = loader(pcb, filename);
-  Log("after loader");
+  Log("%x",entry);
 
   _Area stack;
   stack.start = pcb->stack;
