@@ -31,7 +31,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   if(fd!=-1){
     //printf("before read\n");
     fs_read(fd,&elfheader,sizeof(Elf_Ehdr));
-    printf("%x\n",elfheader.e_entry);
+    //printf("%x\n",elfheader.e_entry);
     fs_lseek(fd,elfheader.e_phoff,SEEK_SET);
     for(uint16_t i=0;i<elfheader.e_phnum;i++){
       fs_read(fd,&programheader,sizeof(Elf_Phdr));
