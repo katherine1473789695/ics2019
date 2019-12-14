@@ -1,6 +1,7 @@
 #include "proc.h"
 #include <elf.h>
 #include "fs.h"
+#define DEFAULT_ENTRY ((void *)0x4000000)
 
 
 #ifdef __ISA_AM_NATIVE__
