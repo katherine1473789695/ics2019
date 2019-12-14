@@ -15,6 +15,7 @@ static paddr_t page_translate(vaddr_t addr){
   pte.val = paddr_read((pde.page_frame<<12) + PTE_INDEX(addr) * sizeof(PTE), sizeof(PTE));
   assert(pte.present == 1);
   paddr_t paddr = (pte.page_frame<<12)|(addr & PAGE_MASK);
+  printf("the translated paddr is %x\n",paddr);
   return paddr;
 }
 
