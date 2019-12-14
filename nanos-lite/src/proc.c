@@ -27,6 +27,7 @@ void init_proc() {
   context_uload(&pcb[0], "/bin/dummy");
 
   switch_boot_pcb();
+  Log("the end of the proc");
 
   //Log("Initializing processes...");
 
