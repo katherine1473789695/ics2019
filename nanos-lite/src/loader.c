@@ -23,6 +23,7 @@ size_t fs_openoffset(int fd);
 //extern Finfo file_table[];
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
+  printf("enter loader\n");
   Elf_Ehdr elfheader;
   Elf_Phdr programheader;
   int fd = fs_open(filename,0,0);
