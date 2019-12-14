@@ -4,7 +4,7 @@ _Context* schedule(_Context *prev);
 
 static _Context* do_event(_Event e, _Context* c) {
   //printf("%x\n",e.event);
-  Log("switch event");
+  //Log("switch event");
   switch (e.event) {
     case _EVENT_YIELD: return schedule(c);break;
     case _EVENT_SYSCALL: return do_syscall(c);break;

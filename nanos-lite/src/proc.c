@@ -27,7 +27,7 @@ void init_proc() {
   context_uload(&pcb[1], "/bin/dummy");
 
   switch_boot_pcb();
-  Log("the end of the proc");
+  //Log("the end of the proc");
 
   //Log("Initializing processes...");
 
@@ -37,10 +37,10 @@ void init_proc() {
 }
 
 _Context* schedule(_Context *prev) {
-  Log("enter schedule");
+  //Log("enter schedule");
   current->cp = prev;
   current = &pcb[1];
-  Log("current %x",current->cp);
+  //Log("current %x",current->cp);
   //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
