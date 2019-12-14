@@ -92,4 +92,5 @@ void context_uload(PCB *pcb, const char *filename) {
   stack.end = stack.start + sizeof(pcb->stack);
 
   pcb->cp = _ucontext(&pcb->as, stack, stack, (void *)entry, NULL);
+  Log("the end of uload\n");
 }
