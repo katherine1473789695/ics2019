@@ -40,7 +40,7 @@ _Context* schedule(_Context *prev) {
   Log("enter schedule");
   current->cp = prev;
   current = &pcb[1];
-  Log("current %x",current);
+  Log("current %x",current->cp);
   //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
