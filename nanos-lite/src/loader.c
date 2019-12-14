@@ -46,6 +46,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
           size_t read_bytes = ((sz-i)>=PGSIZE) ? PGSIZE : (sz-i);
           printf("%x\n",read_bytes);
           paddr = new_page(1);
+          printf("%x\n",paddr);
           _map(&pcb->as,vaddr,paddr,0);
           fs_read(fd,paddr,read_bytes);
           //memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
