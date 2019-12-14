@@ -81,7 +81,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       //offset+=size;
     //}
   //}
-  
+  printf("going out loader\n");
   return elfheader.e_entry;
 }
 
