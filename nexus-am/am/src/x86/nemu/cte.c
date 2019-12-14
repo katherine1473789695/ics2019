@@ -28,6 +28,7 @@ _Context* __am_irq_handle(_Context *c) {
       next = c;
     }
   }
+  _putc('b');
   __am_switch(next);
   _putc('n');
   return next;
