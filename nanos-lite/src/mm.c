@@ -1,6 +1,9 @@
 #include "memory.h"
+#include "proc.h"
 
 static void *pf = NULL;
+int _map(_AddressSpace *as, void *va, void *pa, int prot);
+//extern PCB *current;
 
 void* new_page(size_t nr_page) {
   void *p = pf;
@@ -15,6 +18,7 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk, intptr_t increment) {
+
   return 0;
 }
 

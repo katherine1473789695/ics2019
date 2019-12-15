@@ -12,6 +12,7 @@ int fs_close(int fd);
 size_t fs_write(int fd,const void *buf,size_t len);
 size_t fs_lseek(int fd,size_t offset,int whence);
 extern void naive_uload(PCB *pcb, const char *filename);
+int mm_brk(uintptr_t brk, intptr_t increment);
 
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
@@ -30,7 +31,7 @@ _Context* do_syscall(_Context *c) {
     case SYS_write: result = fs_write(a[1],(void*)a[2],a[3]);break;
     case SYS_close: result = fs_close(a[1]);break;
     case SYS_lseek: result = fs_lseek(a[1],a[2],a[3]);break;
-    case SYS_brk: result=0;break;
+    case SYS_brk: result=mm_brk(a[1],0);break;
     case SYS_execve: naive_uload(NULL,(void *)a[1]);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
