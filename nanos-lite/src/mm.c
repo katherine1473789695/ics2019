@@ -23,6 +23,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
   void* end = (void*)PGROUNDUP(brk);
   if(current->max_brk<=brk){
     for(va=begin;va<=end;va+=PGSIZE){
+      pa = new_page(1);
       _map(&current->as,va,pa,0);
     }
     current->max_brk = (uint32_t )end;
