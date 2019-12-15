@@ -62,8 +62,8 @@ int _write(int fd, void *buf, size_t count) {
   return _syscall_(SYS_write,fd,buf,count);
 }
 
-extern char _end;
-uintptr_t program_break = (uintptr_t)&_end;
+extern char end;
+uintptr_t program_break = (uintptr_t)&end;
 void *_sbrk(intptr_t increment) {
   uintptr_t old = program_break;
   if(_syscall_(SYS_brk,increment+old,0,0)==0){
