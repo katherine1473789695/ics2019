@@ -49,9 +49,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
           //printf("%x\n",paddr);
           printf("%x  %x\n",vaddr,paddr);
           _map(&pcb->as,vaddr,paddr,0);
-          vaddr+=PGSIZE;
           fs_read(fd,paddr,read_bytes);
           pcb->max_brk = PGROUNDUP((uintptr_t)vaddr+read_bytes);
+          vaddr+=PGSIZE;
           //memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
         }
 
