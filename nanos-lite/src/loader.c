@@ -47,6 +47,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
           //printf("%x\n",read_bytes);
           paddr = new_page(1);
           //printf("%x\n",paddr);
+          printf("%x  %x\n",vaddr,paddr);
           _map(&pcb->as,vaddr,paddr,0);
           vaddr+=PGSIZE;
           fs_read(fd,paddr,read_bytes);
