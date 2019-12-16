@@ -36,7 +36,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     for(uint16_t i=0;i<elfheader.e_phnum;i++){
       fs_read(fd,&programheader,sizeof(Elf_Phdr));
       size_t opset=fs_openoffset(fd);
-      //ramdisk_read(&programheader,elfheader.e_phoff+i*elfheader.e_phentsize,sizeof(Elf_Phdr));
       if(programheader.p_type == PT_LOAD){
         fs_lseek(fd,programheader.p_offset,SEEK_SET);
         void *vaddr, *paddr;
