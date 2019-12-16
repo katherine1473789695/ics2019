@@ -20,13 +20,13 @@ void free_page(void *p) {
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk, intptr_t increment) {
   void *va = NULL,*pa = NULL;
-  void *begin =(void *) brk;
-  void *end = (void*)(brk+increment);
+  void *begin =(void *) PGROUNDUP(brk);
+  void *end = (void*)PGROUNDUP(brk+increment);
   for(va=begin;va<=end;va+=PGSIZE){
     pa = new_page(1);
     _map(&current->as,va,pa,0);
   }
-  //current->max_brk = (uint32_t )end;
+  current->max_brk = (uint32_t )end;
   
 
   return 0;

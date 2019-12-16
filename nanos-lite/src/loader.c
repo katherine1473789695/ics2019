@@ -52,13 +52,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
           pcb->max_brk = PGROUNDUP((uintptr_t)vaddr+read_bytes);
           //memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
         }
-        //void *pa = new_page(1);
-        //_map(&pcb->as,(void *)programheader.p_vaddr,pa,0);
-        //fs_read(fd,pa,programheader.p_filesz);
-        //uint8_t buf[programheader.p_filesz];
-        //ramdisk_read(&buf,programheader.p_offset+fs_offset(fd),programheader.p_filesz);
-        //memcpy((void*)programheader.p_vaddr,&buf,programheader.p_filesz);
-        
+
       }
       fs_lseek(fd,opset,SEEK_SET);
     }
