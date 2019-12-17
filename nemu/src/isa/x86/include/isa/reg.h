@@ -64,7 +64,7 @@ typedef struct {
   }idtr;
 
   rtlreg_t cs, cr0, cr3;
-
+  bool INTR;
 
 } CPU_state;
 
