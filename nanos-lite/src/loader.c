@@ -40,12 +40,14 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         fs_lseek(fd,programheader.p_offset,SEEK_SET);
         void *vaddr=NULL, *paddr=NULL;
         vaddr = (void*)programheader.p_vaddr;
+        int count=0;
         //printf("%x\n",programheader.p_vaddr);
         //printf("%x\n",vaddr);
         for(size_t i=0,sz = programheader.p_memsz;i<sz;i+=PGSIZE){
           size_t read_bytes = ((sz-i)>=PGSIZE) ? PGSIZE : (sz-i);
           //printf("%x\n",read_bytes);
           paddr = new_page(1);
+          count++;
           //printf("%x\n",paddr);
           printf("%x  %x\n",vaddr,paddr);
           _map(&pcb->as,vaddr,paddr,0);
@@ -54,7 +56,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
           vaddr+=PGSIZE;
           //memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
         }
-        memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
+        memset((void*)paddr-(count-1)*PGSIZE+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
 
       }
       fs_lseek(fd,opset,SEEK_SET);
