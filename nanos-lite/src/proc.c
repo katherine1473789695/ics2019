@@ -24,6 +24,7 @@ void hello_fun(void *arg) {
 
 void init_proc() {
   //context_kload(&pcb[0],(void*)hello_fun);
+  context_uload(&pcb[0], "/bin/hello");
   context_uload(&pcb[1], "/bin/pal");
 
   switch_boot_pcb();
@@ -39,8 +40,8 @@ void init_proc() {
 _Context* schedule(_Context *prev) {
   //Log("enter schedule");
   current->cp = prev;
-  current = &pcb[1];
+  //current = &pcb[1];
   //Log("current %x",current->cp);
-  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
