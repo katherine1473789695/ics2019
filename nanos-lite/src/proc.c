@@ -43,12 +43,18 @@ void init_proc() {
   //naive_uload(NULL, "/bin/init");
 
 }
-
+static uint32_t count=0;
 _Context* schedule(_Context *prev) {
   //Log("enter schedule");
   current->cp = prev;
+  if (count == 0xff) {
+    count = 0;
+    current = &pcb[0];
+  }
+  else current = &pcb[fg_pcb];
+  ++count;
   //current = &pcb[1];
   //Log("current %x",current->cp);
-  current = (current == &pcb[0] ? &pcb[fg_pcb] : &pcb[0]);
+  //current = (current == &pcb[0] ? &pcb[fg_pcb] : &pcb[0]);
   return current->cp;
 }
