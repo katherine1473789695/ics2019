@@ -21,7 +21,7 @@ void hello_fun(void *arg) {
     _yield();
   }
 }
-static int fg_pcb = 0;
+static int fg_pcb = 1;
 void set_pcb_id(int id){
     fg_pcb = id;
     Log("chosen=%d", id);
