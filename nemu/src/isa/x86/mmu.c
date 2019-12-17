@@ -2,6 +2,7 @@
 #include "isa/mmu.h"
 
 static paddr_t page_translate(vaddr_t addr){
+  printf("%x\n",addr);
   CR3 cr3;
   PDE pde;
   PTE pte;
