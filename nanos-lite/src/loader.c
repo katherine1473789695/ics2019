@@ -38,9 +38,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       size_t opset=fs_openoffset(fd);
       if(programheader.p_type == PT_LOAD){
         fs_lseek(fd,programheader.p_offset,SEEK_SET);
-        void *vaddr, *paddr;
+        void *vaddr=NULL, *paddr=NULL;
         vaddr = (void*)programheader.p_vaddr;
-        printf("%x\n",programheader.p_vaddr);
+        //printf("%x\n",programheader.p_vaddr);
         //printf("%x\n",vaddr);
         for(size_t i=0,sz = programheader.p_memsz;i<sz;i+=PGSIZE){
           size_t read_bytes = ((sz-i)>=PGSIZE) ? PGSIZE : (sz-i);
@@ -50,11 +50,11 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
           printf("%x  %x\n",vaddr,paddr);
           _map(&pcb->as,vaddr,paddr,0);
           fs_read(fd,paddr,read_bytes);
-          memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
           pcb->max_brk = (uintptr_t)vaddr+PGSIZE;
           vaddr+=PGSIZE;
           //memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
         }
+        memset((void*)paddr+programheader.p_filesz,0,(programheader.p_memsz-programheader.p_filesz));
 
       }
       fs_lseek(fd,opset,SEEK_SET);
