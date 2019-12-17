@@ -16,7 +16,7 @@ static const char *keyname[256] __attribute__((used)) = {
   [_KEY_NONE] = "NONE",
   _KEYS(NAME)
 };
-
+extern void set_pcb_id(int id);
 size_t events_read(void *buf, size_t offset, size_t len) {
   //_yield();
   //sprintf(buf,"t %d\n",uptime());
@@ -31,6 +31,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   if(key & 0x8000){
     key ^=0x8000;
     down = true;
+    if(key == _KEY_1)set_pcb_id(1);
+    else if(key == _KEY_2)set_pcb_id(2);
+    else if(key == _KEY_3)set_pcb_id(3);
   }
   if(key == _KEY_NONE){
     //uint32_t time = uptime();

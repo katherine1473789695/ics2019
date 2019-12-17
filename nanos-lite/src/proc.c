@@ -21,11 +21,18 @@ void hello_fun(void *arg) {
     _yield();
   }
 }
+static int fg_pcb = 0;
+void set_pcb_id(int id){
+    fg_pcb = id;
+    Log("chosen=%d", id);
+}
 
 void init_proc() {
   //context_kload(&pcb[0],(void*)hello_fun);
   context_uload(&pcb[0], "/bin/hello");
-  context_uload(&pcb[1], "/bin/init");
+  context_uload(&pcb[1], "/bin/pal");
+  context_uload(&pcb[2], "/bin/pal");
+  context_uload(&pcb[3], "/bin/pal");
 
   switch_boot_pcb();
   //Log("the end of the proc");
@@ -42,6 +49,6 @@ _Context* schedule(_Context *prev) {
   current->cp = prev;
   //current = &pcb[1];
   //Log("current %x",current->cp);
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[fg_pcb] : &pcb[0]);
   return current->cp;
 }
